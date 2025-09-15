@@ -1,0 +1,44 @@
+{
+  "entryPoints": [
+    "src/BoothMate.ts",
+    "src/services/item/ItemService.ts",
+    "src/services/shop/ShopService.ts",
+    "src/services/wishlist/WishlistService.ts",
+    "src/services/utility/UtilityService.ts",
+    "src/services/notification/NotificationService.ts",
+    "src/types/enums.ts",
+    "src/types/interfaces.ts"
+  ],
+  "exclude": [
+    "src/types/services/**/*.ts",
+    "src/types/boothApi/**/*.ts",
+    "src/types/extracted/**/*.ts",
+    "src/types/normalized/**/*.ts"
+  ],
+  "out": "docs",
+  "name": "BoothMate API Documentation",
+  "includeVersion": true,
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "excludeExternals": true,
+  "excludeNotDocumented": false,
+  "readme": "README.md",
+  "theme": "default",
+  "sort": ["source-order"],
+  "navigation": {
+    "includeCategories": true,
+    "includeGroups": true
+  },
+  "categorizeByGroup": true,
+  "defaultCategory": "Other",
+  "categoryOrder": ["Classes", "Interfaces", "Enums", "Types", "Other"],
+  "searchInComments": true,
+  "cleanOutputDir": true,
+  "plugin": [],
+  "visibilityFilters": {
+    "protected": false,
+    "private": false,
+    "inherited": true,
+    "external": false
+  }
+}

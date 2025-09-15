@@ -1,0 +1,46 @@
+{
+  "name": "boothmate",
+  "version": "0.1.0",
+  "description": "Booth用の非公式スクレイピングライブラリ",
+  "main": "dist/BoothMate.js",
+  "types": "dist/BoothMate.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "format": "prettier --write \"src/**/*.ts\" --log-level warn",
+    "build": "npm run format && tsc && tsc-alias",
+    "clean": "rmdir /s /q dist docs",
+    "docs": "npx typedoc",
+    "test": "npm run format && jest",
+    "old-test": "npm run build && node dist/src/test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "@types/web-app-manifest": "^1.0.9",
+    "axios": "^1.11.0",
+    "axios-cookiejar-support": "^6.0.4",
+    "chalk": "^4.1.2",
+    "cheerio": "^1.1.2",
+    "dotenv": "^17.2.0",
+    "lodash": "^4.17.21",
+    "tough-cookie": "^5.1.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/lodash": "^4.17.20",
+    "@types/node": "^24.1.0",
+    "@types/tough-cookie": "^4.0.5",
+    "jest": "^30.1.1",
+    "jest-html-reporter": "^4.3.0",
+    "prettier": "^3.6.2",
+    "ts-jest": "^29.4.1",
+    "tsc-alias": "^1.8.16",
+    "typedoc": "^0.28.12",
+    "typescript": "^5.8.3"
+  }
+}
