@@ -1,6 +1,6 @@
 import { HTTPClient } from '@/services';
 import { EndpointGenerator } from '@/services/api';
-import { BWishlistCounts } from '@/types/boothApi';
+import { BWishlistCounts } from '@/types/booth-api';
 
 export class CommonJsonFetcher {
   private client: HTTPClient;

@@ -13,7 +13,7 @@ import {
   BWishlistCounts,
   BWishlistMetadata,
   BWishlistName,
-} from '@/types/boothApi';
+} from '@/types/booth-api';
 
 export class JsonNormalizer {
   static WISHLIST_ITEM_LIMIT = 2000;

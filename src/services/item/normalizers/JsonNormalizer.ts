@@ -10,7 +10,7 @@ import {
   ItemTrackInfoWithFiles,
   ItemVariation,
 } from '@/types';
-import { BItem, BItemDownloadable, BItemImages, BItemVariation } from '@/types/boothApi';
+import { BItem, BItemDownloadable, BItemImages, BItemVariation } from '@/types/booth-api';
 
 export class JsonNormalizer {
   private constructor() {}

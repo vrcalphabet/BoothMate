@@ -5,7 +5,7 @@ import {
   BWishlist,
   BWishlistName,
   BWishlistMetadata,
-} from '@/types/boothApi';
+} from '@/types/booth-api';
 
 export class JsonFetcher {
   private client: HTTPClient;

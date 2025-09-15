@@ -1,5 +1,5 @@
 import { cheerio } from '@/services';
-import { BItemSummary } from '@/types/boothApi';
+import { BItemSummary } from '@/types/booth-api';
 import {
   EItemList,
   EItemListSummary,

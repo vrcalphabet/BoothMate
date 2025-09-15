@@ -1,5 +1,5 @@
 import { AudioPreview, Item } from '@/types';
-import { BItem, BItemShop } from '@/types/boothApi';
+import { BItem, BItemShop } from '@/types/booth-api';
 
 export class CommonJsonNormalizer {
   private constructor() {}

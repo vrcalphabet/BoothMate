@@ -1,7 +1,7 @@
 import { CommonHtmlNormalizer } from '@/services/common';
 import { LinkClassifier } from '@/services/utils';
 import { BoothEvent, Item, ItemContent, ItemWithContents, SearchResult } from '@/types';
-import { BWishlistCounts } from '@/types/boothApi';
+import { BWishlistCounts } from '@/types/booth-api';
 import { EItemContent, EItemContents, ESearchResult } from '@/types/extracted';
 
 export class HtmlNormalizer {
