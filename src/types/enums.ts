@@ -1,4 +1,4 @@
-/** 商品のカテゴリ */
+/** 商品の検索フィルタなどに使用する，商品のカテゴリ */
 export enum Category {
   /** 漫画 */
   MANGA = '漫画',
@@ -36,7 +36,7 @@ export enum Category {
   PAINTING_ART_WORK = '絵画・アート作品',
 }
 
-/** 商品のサブカテゴリ */
+/** 商品の検索フィルタなどに使用する，商品のサブカテゴリ */
 export enum SubCategory {
   /** 漫画・マンガ */
   MANGA = '漫画・マンガ',
@@ -309,9 +309,11 @@ export enum SubCategory {
 }
 
 /**
- * 開催イベント。新しいイベントが開催された場合は，末尾に追加してください。
+ * 商品の検索フィルタなどに使用する，開催されたイベント。
  *
- * イベントIDと名前の対応は，商品編集ページから取得できます。
+ * 新しいイベントが開催された場合は，末尾に追加してください。
+ *
+ * イベントIDと名前の対応は，`https://manage.booth.pm/items/{itemId}`から取得できます。
  */
 export enum BoothEvent {
   /** コミックマーケット86 */
@@ -1684,9 +1686,23 @@ export enum BoothEvent {
   comiccity_vega_online_250907 = 'comiccity-vega-online-250907',
   /** TOKYO FES Sep.2025 */
   tokyofes_sep2025 = 'tokyofes-sep2025',
+  /** 関西コミティア74 */
+  k_comitia74 = 'k-comitia74',
+  /** M3-2025秋 */
+  m3_2025a = 'm3-2025a',
+  /** 第十二回博麗神社秋季例大祭 */
+  reitaisai_a12 = 'reitaisai-a12',
+  /** COMIC1☆27 */
+  comic1_27 = 'comic1-27',
+  /** 第十二回技術書同人誌博覧会 */
+  gishohaku12 = 'gishohaku12',
+  /** J.GARDEN58 */
+  j_garden58 = 'j-garden58',
+  /** COMIC CITY SPARK 20 -day1- */
+  comiccity_spark20_1 = 'comiccity-spark20-1',
 }
 
-/** 商品の種類 */
+/** 商品の検索フィルタに使用する，商品の種類 */
 export enum ItemType {
   /** 物販 */
   PHYSICAL = 'physical',
@@ -1702,7 +1718,7 @@ export enum ItemType {
   UNSPECIFIED = '',
 }
 
-/** 年齢制限 */
+/** 商品の検索フィルタに使用する，年齢制限 */
 export enum AgeRestriction {
   /** R18商品のみ */
   ADULT_ONLY = 'only',
@@ -1712,7 +1728,7 @@ export enum AgeRestriction {
   GENERAL = '',
 }
 
-/** 商品の並び替え */
+/** 商品の検索フィルタに使用する，商品の並び替え */
 export enum SortOrder {
   /** 人気順（順番はアルゴリズム依存です。アクセスするたびに順番が変化するので，おすすめしません。） */
   POPULARITY = '',
@@ -1768,6 +1784,7 @@ export enum LinkType {
   Other = 'other',
 }
 
+/** 埋め込みコンテンツの種類 */
 export enum EmbedType {
   /** VRoid */
   VRoid = 'vroid',

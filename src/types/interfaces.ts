@@ -8,7 +8,7 @@ import {
   LinkType,
 } from './enums';
 
-/** 検索フィルタ */
+/** 商品の検索に使用する検索フィルタ */
 export interface SearchFilter {
   /**
    * ページ番号。1から始まり，デフォルトは`1`です。 \
