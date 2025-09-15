@@ -4,7 +4,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-TypeScriptで書かれたBooth用の非公式スクレイピングライブラリです。Boothの利用規約に抵触しない範囲でご自由に利用ください。
+TypeScriptで書かれたBooth用の非公式スクレイピングライブラリです。[Boothの利用規約](#謝辞)に抵触しない範囲でご自由に利用ください。
 
 ## 使い方
 
@@ -67,7 +67,7 @@ await client.wishlist.addItem('wishlist-id', 123456);
 await client.wishlist.removeItem('wishlist-id', 123456);
 ```
 
-ここで紹介したAPIは，ほんの一部にしかすぎません。API一覧は，サンプルをご覧ください。
+ここで紹介したAPIは，ほんの一部にしかすぎません。API一覧は，[サンプル](https://github.com/vrcalphabet/BoothMate/tree/master/examples)をご覧ください。
 
 ## インストール
 
@@ -115,13 +115,9 @@ const client = new BoothMate(sessionToken, csrfToken, true); // デバッグモ�
 200  GET  https://accounts.booth.pm/wish_lists.json?item_ids%5B%5D=6794919 (132ms)
 ```
 
-## 対応環境
+## 貢献
 
-- **Node.js**: 22.x以上(これ以前のバージョンでの動作は保証しません)
-
-## コントリビューション
-
-プロジェクトへの貢献を歓迎します！
+プロジェクトへの貢献を歓迎します！以下のルールに従うと，あなたの貢献がスムーズになります！
 
 ### 開発環境セットアップ
 
@@ -137,17 +133,24 @@ npm install
 npm run build
 ```
 
-### コントリビューションガイドライン
+- Node.jsは22.x以上を推奨しています。
 
-1. **フォーク**してブランチを作成
-2. **機能追加・バグ修正**を実装
-3. **コードフォーマット**を実行: `npm run format`
-4. **プルリクエスト**を作成
+### コードスタイル
 
-### コード規約
+- TypeScriptで記述すること
+- `any`型の使用は禁止(連想配列は，`interface`もしくは`Record`を使用してください)
+- Prettierを通すこと
+- ディレクトリ名はkebab-caseで統一すること
+- ファイル名・クラス名は`UpperCamelCase`で統一すること
 
-- TypeScriptの`any`型の使用を禁止
-- Prettierによるコードフォーマット
+### コミットメッセージ
+
+[Conventional Commits](https://www.conventionalcommits.org/ja/v1.0.0/)に従ってください。
+
+### Issue / PR
+
+Issueを立てる際は，バグ報告・機能要望のどちらかを明記してください。
+PRの説明には，目的・変更点・影響範囲・サンプルコードがあるとありがたいです。
 
 ## ライセンス
 
