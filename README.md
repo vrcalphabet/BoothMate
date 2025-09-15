@@ -69,6 +69,8 @@ await client.wishlist.removeItem('wishlist-id', 123456);
 
 ここで紹介したAPIは，ほんの一部にしかすぎません。API一覧は，[サンプル](https://github.com/vrcalphabet/BoothMate/tree/master/examples)をご覧ください。
 
+コードの書き方でお困りですか？お気軽に[DMでご相談ください！](https://x.com/messages/compose?recipient_id=1834886573860831234)
+
 ## インストール
 
 ### npm
@@ -164,7 +166,7 @@ MIT License
 
 - 初回リリース
 
-### v0.1.2 (2025-09-15)
+### v0.1.4 (2025-09-15)
 
 - コードの統一やREADMEなどを修正
 
