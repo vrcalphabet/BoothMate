@@ -14,6 +14,9 @@ module.exports = {
   },
   transform: {
     ...tsJestTransformCfg,
+    '^.+\\.ts$': ['ts-jest', {
+      tsconfig: './tests/tsconfig.test.json'
+    }],
   },
   verbose: true,
   reporters: ['default', 'jest-html-reporter'],
