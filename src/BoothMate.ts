@@ -29,6 +29,19 @@ export class BoothMate {
    * @param sessionToken セッション認証用のCookie値(`_plaza_session_nktz7u`の値)
    * @param csrfToken CSRF保護用のトークン(`meta[name="csrf-token"]`から取得)
    * @param debug デバッグモードの有効/無効(デフォルト: false)
+   *
+   * @example
+   * ```ts
+   * import 'dotenv/config';
+   * import { BoothMate } from 'boothmate';
+   *
+   * const client = new BoothMate(
+   *   process.env.SESSION_TOKEN!,
+   *   process.env.CSRF_TOKEN!
+   * );
+   *
+   * await client.item.search('VRChat');
+   * ```
    */
   constructor(sessionToken: string, csrfToken: string, debug = false) {
     this.client = new HTTPClient({

@@ -21,6 +21,15 @@ export class WishlistService {
    * 自分が作成したウィッシュリストの名前とIDのリストを取得します。
    *
    * @returns ウィッシュリストの名前とIDのリスト
+   *
+   * @example
+   * ```ts
+   * // ウィッシュリストの名前を出力
+   * const wishlists = await client.wishlist.getNames();
+   * for (const wishlist of wishlists) {
+   *   console.log(wishlist.name);
+   * }
+   * ```
    */
   async getNames(): Promise<WishlistSummary[]> {
     const wishlistNames = await this.jsonFetcher.getNames();
@@ -36,6 +45,15 @@ export class WishlistService {
    * @param wishlistId ウィッシュリストのID
    * @param page 取得するページ番号(デフォルト: 1)
    * @returns ウィッシュリストの内容(存在しないまたは非公開の場合はundefined)
+   *
+   * @example
+   * ```ts
+   * // ウィッシュリストの1番目の商品名を出力
+   * const wishlist = await client.wishlist.getItems('my-wishlist');
+   * if (wishlist) {
+   *  console.log(wishlist.items[0].name);
+   * }
+   * ```
    */
   async getItems(wishlistId: string, page: number = 1): Promise<Wishlist | undefined> {
     const wishlistName = await this.jsonFetcher.getMetadata(wishlistId);
@@ -59,6 +77,13 @@ export class WishlistService {
    *
    * @param page 取得するページ番号(デフォルト: 1)
    * @returns デフォルトのウィッシュリストの内容
+   *
+   * @example
+   * ```ts
+   * // デフォルトのウィッシュリストの1番目の商品名を出力
+   * const wishlist = await client.wishlist.getDefaultItems();
+   * console.log(wishlist.items[0].name);
+   * ```
    */
   async getDefaultItems(page: number = 1): Promise<WishlistBasic> {
     const wishlist = await this.jsonFetcher.getDefaultItems(page);
@@ -75,6 +100,13 @@ export class WishlistService {
    *
    * @param page 取得するページ番号(デフォルト: 1)
    * @returns 未分類のウィッシュリストの内容
+   *
+   * @example
+   * ```ts
+   * // 未分類のウィッシュリストの1番目の商品名を出力
+   * const wishlist = await client.wishlist.getUncategorizedItems();
+   * console.log(wishlist.items[0].name);
+   * ```
    */
   async getUncategorizedItems(page: number = 1): Promise<WishlistBasic> {
     const wishlist = await this.jsonFetcher.getUncategorizedItems(page);
@@ -92,6 +124,21 @@ export class WishlistService {
    * @param itemId 確認する商品のID
    * @param wishlistId 確認するウィッシュリストのID(省略時はデフォルトのウィッシュリスト)
    * @returns 商品がウィッシュリストに含まれている場合true、含まれていない場合false
+   *
+   * @example
+   * ```ts
+   * // 商品ID 12345 がデフォルトのウィッシュリストに含まれているか確認
+   * const isInDefault = await client.wishlist.hasItem(12345);
+   * if (isInDefault) {
+   *   console.log('商品はデフォルトのウィッシュリストに含まれています');
+   * }
+   *
+   * // 商品ID 12345 がウィッシュリストに含まれているか確認
+   * const isInWishlist = await client.wishlist.hasItem(12345, 'pQ9TlbPV');
+   * if (isInWishlist) {
+   *   console.log('商品は指定されたウィッシュリストに含まれています');
+   * }
+   * ```
    */
   async hasItem(itemId: number, wishlistId?: string): Promise<boolean> {
     if (wishlistId === undefined) {
@@ -118,6 +165,18 @@ export class WishlistService {
    *                    - 省略時: デフォルトのウィッシュリストに追加
    *                    - 文字列: 指定されたウィッシュリストに追加
    *                    - 配列: 複数のウィッシュリストに追加
+   *
+   * @example
+   * ```ts
+   * // 商品ID 12345 をデフォルトのウィッシュリストに追加
+   * await client.wishlist.addItem(12345);
+   *
+   * // 商品ID 12345 をウィッシュリストに追加
+   * await client.wishlist.addItem(12345, 'pQ9TlbPV');
+   *
+   * // 商品ID 12345 を複数のウィッシュリストに追加
+   * await client.wishlist.addItem(12345, ['pQ9TlbPV', '8OVTLANn']);
+   * ```
    */
   async addItem(itemId: number, wishlistIds?: string | string[]): Promise<void> {
     const wishlistStatus = await this.jsonFetcher.hasItem(itemId);
@@ -150,6 +209,18 @@ export class WishlistService {
    *                    - 省略時: デフォルトのウィッシュリストから削除
    *                    - 文字列: 指定されたウィッシュリストから削除
    *                    - 配列: 複数のウィッシュリストから削除
+   *
+   * @example
+   * ```ts
+   * // 商品ID 12345 をデフォルトのウィッシュリストから削除
+   * await client.wishlist.removeItem(12345);
+   *
+   * // 商品ID 12345 をウィッシュリストから削除
+   * await client.wishlist.removeItem(12345, 'pQ9TlbPV');
+   *
+   * // 商品ID 12345 を複数のウィッシュリストから削除
+   * await client.wishlist.removeItem(12345, ['pQ9TlbPV', '8OVTLANn']);
+   * ```npm
    */
   async removeItem(itemId: number, wishlistIds?: string | string[]): Promise<void> {
     if (wishlistIds === undefined) {

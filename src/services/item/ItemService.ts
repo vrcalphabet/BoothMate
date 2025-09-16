@@ -26,6 +26,22 @@ export class ItemService {
    * @param query 検索キーワード
    * @param filter 検索条件(カテゴリ、価格範囲など)
    * @returns 検索結果(商品リストとページネーション情報を含む)
+   *
+   * @example
+   * ```ts
+   * // すべての商品を取得
+   * await client.item.search();
+   *
+   * // キーワードのみで検索
+   * await client.item.search('VRChat');
+   *
+   * // キーワードとフィルタを指定して検索
+   * await client.item.search('VRChat', { sort: SortOrder.NEWEST });
+   *
+   * // 1番目の商品の商品IDを取得
+   * const result = await client.item.search('VRChat');
+   * const firstItemId = result.items[0].id;
+   * ```
    */
   async search(query: string, filter?: SearchFilter): Promise<SearchResult>;
   /**
@@ -36,6 +52,22 @@ export class ItemService {
    *
    * @param filter 検索条件(カテゴリ、価格範囲など)
    * @returns 検索結果(商品リストとページネーション情報を含む)
+   *
+   * @example
+   * ```ts
+   * // すべての商品を取得
+   * await client.item.search();
+   *
+   * // フィルタのみで検索
+   * await client.item.search({ sort: SortOrder.NEWEST });
+   *
+   * // キーワードとフィルタを指定して検索
+   * await client.item.search({ query: 'VRChat', sort: SortOrder.NEWEST });
+   *
+   * // 1番目の商品の商品IDを取得
+   * const result = await client.item.search({ query: 'VRChat' });
+   * const firstItemId = result.items[0].id;
+   * ```
    */
   async search(filter?: SearchFilter): Promise<SearchResult>;
   async search(
@@ -60,24 +92,50 @@ export class ItemService {
   /**
    * 商品の存在確認を行います。
    *
-   * 指定されたIDの商品が存在するかを確認します。
+   * 指定されたIDの商品が存在するかを確認します。`item.get`より軽量です。
    *
    * @param itemId 確認する商品のID
    * @returns 商品が存在する場合true、存在しない場合false
+   *
+   * @example
+   * ```ts
+   * // 商品ID 12345 が存在するか確認
+   * const exists = await client.item.exists(12345);
+   * if (exists) {
+   *   console.log('商品は存在します');
+   * }
+   * ```
    */
   exists(itemId: number): Promise<boolean> {
     return this.jsonFetcher.exists(itemId);
   }
 
   /**
-   * 商品の詳細情報を取得します。コンテンツ情報も含めることができます。
+   * 商品の詳細情報を取得します。
    *
    * @param itemId 取得する商品のID
    * @param includeContents コンテンツ情報を含めるかどうか(デフォルト: false)
-   *                      - true: 段落の内容とイベント名も含める
-   *                      - false: 基本情報のみ取得
-   *                      ※trueにすると追加のHTTPリクエストが発生します
+   *                      - true: 段落の内容とイベント名も含める(追加のHTTPリクエストが発生します)
+   *                      - false: 上記を除外した詳細情報を取得
+   *
    * @returns 商品の詳細情報(存在しない場合はundefined)
+   *
+   * @example
+   * ```ts
+   * // 商品ID 12345 の詳細情報を取得
+   * const item = await client.item.get(12345);
+   * if (item) {
+   *   console.log(item.name);
+   * }
+   *
+   * // コンテンツ情報も含めて取得
+   * const itemWithContents = await client.item.get(12345, true);
+   * if (itemWithContents) {
+   *   // 1段落目の内容を表示
+   *   const paragraphs = itemWithContents.contents.filter(c => c.is_paragraph);
+   *   console.log(paragraphs[0].text);
+   * }
+   * ```
    */
   async get(itemId: number, includeContents?: false): Promise<Item | undefined>;
   async get(

@@ -16,6 +16,15 @@ export class NotficationService {
    * 最新10件の通知を取得します。
    *
    * @returns 通知の配列
+   *
+   * @example
+   * ```ts
+   * // 通知のタイトルを出力
+   * const notifications = await client.notification.list();
+   * for (const notification of notifications) {
+   *   console.log(notification.content);
+   * }
+   * ```
    */
   async list(): Promise<Notifications> {
     const notifications = await this.jsonFetcher.list();
@@ -26,6 +35,13 @@ export class NotficationService {
    * 未読の通知数を取得します。
    *
    * @returns 未読の通知数
+   *
+   * @example
+   * ```ts
+   * // 未読の通知数を出力
+   * const unreadCount = await client.notification.getUnreadCount();
+   * console.log(`未読の通知数: ${unreadCount}`);
+   * ```
    */
   async getUnreadCount(): Promise<number> {
     const notifications = await this.jsonFetcher.list();

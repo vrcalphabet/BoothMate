@@ -22,6 +22,15 @@ export class ShopService {
    * @param subdomain ショップのサブドメイン
    *                 例: `https://example.booth.pm` → `example`
    * @returns ショップ情報(存在しない場合はundefined)
+   *
+   * @example
+   * ```ts
+   * // ショップの説明文を出力
+   * const shop = await client.shop.get('alphahub');
+   * if (shop) {
+   *   console.log(shop.description);
+   * }
+   * ```
    */
   async get(subdomain: string): Promise<Shop | undefined> {
     const shopHtml = await this.htmlFetcher.getItems(subdomain, 1);
@@ -34,7 +43,7 @@ export class ShopService {
   }
 
   /**
-   * ショップの商品一覧を取得します。
+   * ショップの商品一覧を新着順で取得します。
    *
    * 指定されたショップで販売されている商品の一覧をページ単位で取得します。
    *
@@ -42,6 +51,15 @@ export class ShopService {
    *                 例: `https://example.booth.pm` → `example`
    * @param page 取得するページ番号(デフォルト: 1)
    * @returns ショップの商品一覧(ショップが存在しない場合はundefined)
+   *
+   * @example
+   * ```ts
+   * // ショップの最新の商品の商品名を出力
+   * const shopItems = await client.shop.getItems('alphahub');
+   * if (shopItems) {
+   *   console.log(shopItems.items[0].name);
+   * }
+   * ```
    */
   async getItems(subdomain: string, page: number = 1): Promise<ShopItems | undefined> {
     const shopItemsHtml = await this.htmlFetcher.getItems(subdomain, page);
@@ -59,7 +77,7 @@ export class ShopService {
   }
 
   /**
-   * ショップの商品リストを取得します。
+   * ショップの商品リストを新着順で取得します。
    *
    * ショップが作成した特定の商品リスト(カテゴリ別商品一覧など) を取得します。
    *
@@ -69,6 +87,15 @@ export class ShopService {
    *                  例: `https://example.booth.pm/item_lists/8OVTLANn` → `8OVTLANn`
    * @param page 取得するページ番号(デフォルト: 1)
    * @returns 商品リスト(商品リストが存在しない場合はundefined)
+   *
+   * @example
+   * ```ts
+   * // 商品リストの最新商品の商品名を出力
+   * const itemList = await client.shop.getItemList('mukumi', '8OVTLANn');
+   * if (itemList) {
+   *   console.log(itemList.items[0].name);
+   * }
+   * ```
    */
   async getItemList(
     subdomain: string,
