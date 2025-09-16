@@ -1,5 +1,5 @@
 import { AgeRestriction, ItemType, SortOrder } from '@/types';
-import { Validator } from '../utils';
+import { Validator } from '@/utils';
 import { NSearchFilter } from '@/types/normalized';
 
 export class HtmlEndpointGenerator {

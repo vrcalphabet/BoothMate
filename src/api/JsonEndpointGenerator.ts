@@ -1,4 +1,4 @@
-import { Validator } from '../utils';
+import { Validator } from '@/utils';
 
 export class JsonEndpointGenerator {
   protected static baseUrl: string = 'https://booth.pm';
