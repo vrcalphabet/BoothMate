@@ -1,6 +1,6 @@
 {
   "name": "boothmate",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "Booth用の非公式スクレイピングライブラリ",
   "main": "dist/BoothMate.js",
   "types": "dist/BoothMate.d.ts",
