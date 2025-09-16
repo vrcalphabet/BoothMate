@@ -15,4 +15,12 @@ describe('BoothMate.notification', () => {
       expect(Array.isArray(result)).toBe(true);
     });
   });
+  
+  describe('BoothMate.notification.getUnreadCount', () => {
+    it('数値が返るか？', async () => {
+      const result = await client.notification.getUnreadCount();
+      expect(result).toBeDefined();
+      expect(typeof result).toBe('number');
+    });
+  });
 });
