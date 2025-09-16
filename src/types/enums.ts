@@ -1733,7 +1733,7 @@ export enum SortOrder {
   /** 人気順（順番はアルゴリズム依存です。アクセスするたびに順番が変化するので，おすすめしません。） */
   POPULARITY = '',
   /** 新着順 */
-  NEW = 'new',
+  NEWEST = 'new',
   /** スキ順 */
   LIKES = 'wish_lists',
   /** 価格が高い順 */
