@@ -56,18 +56,18 @@ const shopItems = await client.shop.getItems('vrcalphabet');
 const wishlists = await client.wishlist.getNames();
 console.log(`ウィッシュリスト数: ${wishlists.length}`);
 
-// デフォルトのウィッシュリスト取得
-const defaultWishlist = await client.wishlist.getDefaultItems();
-console.log(`アイテム数: ${defaultWishlist.total_items}`);
+// ウィッシュリスト内の商品一覧を取得
+const wishlistItems = await client.wishlist.getItems('pQ9TlbPV');
+console.log(`アイテム数: ${wishlistItems.total_items}`);
 
 // 商品をウィッシュリストに追加
-await client.wishlist.addItem('wishlist-id', 123456);
+await client.wishlist.addItem('pQ9TlbPV', 123456);
 
 // ウィッシュリストから商品を削除
-await client.wishlist.removeItem('wishlist-id', 123456);
+await client.wishlist.removeItem('pQ9TlbPV', 123456);
 ```
 
-ここで紹介したAPIは，ほんの一部にしかすぎません。API一覧は，[サンプル](https://github.com/vrcalphabet/BoothMate/tree/master/examples)をご覧ください。
+ここで紹介したAPIは，ほんの一部にしかすぎません。API一覧は，[ドキュメンテーション](https://vrcalphabet.github.io/BoothMate/)や[サンプル](https://github.com/vrcalphabet/BoothMate/tree/master/examples)をご覧ください。
 
 コードの書き方でお困りですか？お気軽に[DMでご相談ください！](https://x.com/messages/compose?recipient_id=1834886573860831234)
 
@@ -145,10 +145,6 @@ npm run build
 - ディレクトリ名はkebab-caseで統一すること
 - ファイル名・クラス名は`UpperCamelCase`で統一すること
 
-### コミットメッセージ
-
-[Conventional Commits](https://www.conventionalcommits.org/ja/v1.0.0/)に従ってください。
-
 ### Issue / PR
 
 Issueを立てる際は，バグ報告・機能要望のどちらかを明記してください。
@@ -191,5 +187,4 @@ MIT License
 
 ---
 
-**注意**: このライブラリは非公式です。Booth.pmの利用規約([サービス共通利用規約](https://policies.pixiv.net/#terms), [Booth利用規約](https://policies.pixiv.net/#booth))を遵守してご利用ください。
-また，各APIは1秒以上ごとに実行するなどしてBoothのサーバに負荷が掛からないように配慮してください。
+**注意**: このライブラリは非公式です。Booth.pmの利用規約([サービス共通利用規約](https://policies.pixiv.net/#terms), [Booth利用規約](https://policies.pixiv.net/#booth))を遵守してご利用ください。また，各APIは1秒以上ごとに実行するなどしてBoothのサーバに負荷が掛からないように配慮してください。

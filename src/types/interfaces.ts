@@ -73,7 +73,7 @@ export interface ItemSummary {
   is_vrchat: boolean;
   /** 成人向け商品か */
   is_adult: boolean;
-  /** 値段の最小値。 */
+  /** 値段の最小値 */
   min_price: number;
   /** 値段のバリエーションが存在するか */
   has_variations: boolean;
