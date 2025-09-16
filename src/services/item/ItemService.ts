@@ -1,5 +1,5 @@
 import { Item, ItemWithContents, SearchFilter, SearchResult } from '@/types';
-import { SearchFilterNormalizer } from '../utils';
+import { SearchFilterNormalizer } from '@/utils';
 import { HtmlFetcher, JsonFetcher } from './fetchers';
 import { HTTPClient } from '..';
 import { HtmlExtractor } from './extractors';

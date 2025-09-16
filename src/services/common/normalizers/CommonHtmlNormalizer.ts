@@ -1,4 +1,4 @@
-import { CategoryConverter } from '@/services/utils';
+import { CategoryConverter } from '@/utils';
 import { BoothEvent, ImageInfo, ItemSummary, ShopSummary, SubCategory } from '@/types';
 import { BWishlistCounts } from '@/types/booth-api';
 import { EItemSummary, EShopSummary } from '@/types/extracted';
@@ -44,10 +44,10 @@ export class CommonHtmlNormalizer {
 
   static thumbnails(thumbnails: string[]): ImageInfo[] {
     return thumbnails.map<ImageInfo>((thumbnail) => {
-      const imageId = thumbnail.match(/\/([\w-]+\/i\/\d+\/[\w-]+)/)![1];
+      const imageId = thumbnail.match(/\/([\w-]+\/i\/\d+\/[\w-]+)/);
 
       return {
-        original: `https://booth.pximg.net/${imageId}.png`,
+        original: imageId ? `https://booth.pximg.net/${imageId[1]}.png` : thumbnail,
         resized: thumbnail,
       };
     });

@@ -1,9 +1,9 @@
 import { WebAppManifest } from 'web-app-manifest';
 import { JsonFetcher } from './fetchers';
 import { HTTPClient } from '..';
-import { FileSizeConverter } from '../utils';
+import { FileSizeConverter } from '@/utils';
 
-export class UtilityService {
+export class UtilsService {
   private jsonFetcher: JsonFetcher;
 
   constructor(client: HTTPClient) {
@@ -20,7 +20,7 @@ export class UtilityService {
    * @example
    * ```ts
    * // アプリの名前を出力
-   * const manifest = await client.utility.getManifest();
+   * const manifest = await client.utils.getManifest();
    * console.log(manifest.name);
    * ```
    */
@@ -42,7 +42,7 @@ export class UtilityService {
    * @example
    * ```ts
    * // ログイン状態を確認
-   * const isLoggedIn = await client.utility.validateToken();
+   * const isLoggedIn = await client.utils.validateToken();
    * if (isLoggedIn) {
    *   console.log('ログイン済みです');
    * }
@@ -64,7 +64,7 @@ export class UtilityService {
    * @example
    * ```ts
    * // "art" に対する検索候補を取得
-   * const suggestions = await client.utility.autocomplete('art');
+   * const suggestions = await client.utils.autocomplete('art');
    * for (const suggestion of suggestions) {
    *   console.log(suggestion);
    * }
@@ -89,7 +89,7 @@ export class UtilityService {
    * @example
    * ```ts
    * // 商品URLから商品IDを抽出
-   * const itemId = client.utility.extractItemId('https://example.booth.pm/items/12345');
+   * const itemId = client.utils.extractItemId('https://example.booth.pm/items/12345');
    * if (itemId) {
    *   console.log(`商品ID: ${itemId}`); // 商品ID: 12345
    * }
@@ -125,7 +125,7 @@ export class UtilityService {
    * @example
    * ```ts
    * // ショップURLからサブドメインを抽出
-   * const subdomain = client.utility.extractSubdomain('https://example.booth.pm/');
+   * const subdomain = client.utils.extractSubdomain('https://example.booth.pm/');
    * if (subdomain) {
    *   console.log(`サブドメイン: ${subdomain}`); // サブドメイン: example
    * }
@@ -157,7 +157,7 @@ export class UtilityService {
    * @example
    * ```ts
    * // ウィッシュリストURLからウィッシュリストIDを抽出
-   * const wishlistId = client.utility.extractWishlistId('https://accounts.booth.pm/wish_lists/pQ9TlbPV');
+   * const wishlistId = client.utils.extractWishlistId('https://accounts.booth.pm/wish_lists/pQ9TlbPV');
    * if (wishlistId) {
    *   console.log(`ウィッシュリストID: ${wishlistId}`); // ウィッシュリストID: pQ9TlbPV
    * }
@@ -193,7 +193,7 @@ export class UtilityService {
    * @example
    * ```ts
    * // 商品リストURLからサブドメインと商品リストIDを抽出
-   * const result = client.utility.extractItemListId('https://example.booth.pm/item_lists/8OVTLANn');
+   * const result = client.utils.extractItemListId('https://example.booth.pm/item_lists/8OVTLANn');
    * if (result) {
    *   const [subdomain, itemListId] = result;
    *   console.log(`サブドメイン: ${subdomain}`); // サブドメイン: example
@@ -222,7 +222,7 @@ export class UtilityService {
    * @example
    * ```ts
    * // 1500バイトを人間に読みやすい形式に変換
-   * const readableSize = client.utility.formatFileSize(1500);
+   * const readableSize = client.utils.formatFileSize(1500);
    * console.log(readableSize); // "1.47 KB"
    * ```
    */

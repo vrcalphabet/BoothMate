@@ -1,5 +1,5 @@
 import { CommonHtmlNormalizer } from '@/services/common';
-import { LinkClassifier } from '@/services/utils';
+import { LinkClassifier } from '@/utils';
 import { ItemList, ItemListSummary, Link, Shop, ShopItems } from '@/types';
 import { BWishlistCounts } from '@/types/booth-api';
 import { EItemList, EItemListSummary, ELink, EShop, EShopItems } from '@/types/extracted';

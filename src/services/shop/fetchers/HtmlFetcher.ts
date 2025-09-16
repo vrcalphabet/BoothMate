@@ -1,5 +1,5 @@
 import { HTTPClient } from '@/services';
-import { EndpointGenerator } from '@/services/api';
+import { EndpointGenerator } from '@/api';
 
 export class HtmlFetcher {
   private client: HTTPClient;

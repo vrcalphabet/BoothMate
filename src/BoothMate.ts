@@ -1,9 +1,11 @@
-import { ShopService } from './services';
-import { UtilityService } from './services';
-import { NotficationService } from './services';
-import { WishlistService } from './services';
-import { ItemService } from './services';
-import { HTTPClient } from './services';
+import {
+  ShopService,
+  UtilsService,
+  NotficationService,
+  WishlistService,
+  ItemService,
+  HTTPClient,
+} from './services';
 
 export class BoothMate {
   private client: HTTPClient;
@@ -14,7 +16,7 @@ export class BoothMate {
   /** スキリストの取得・操作を行うサービスクラスです。 */
   readonly wishlist: WishlistService;
   /** ユーティリティ関数を提供するサービスクラスです。 */
-  readonly utility: UtilityService;
+  readonly utils: UtilsService;
   /**
    * 通知の取得を行うサービスクラスです。
    * @experimental 実験的な機能であり、将来的に変更される可能性があります。
@@ -53,7 +55,7 @@ export class BoothMate {
     this.item = new ItemService(this.client);
     this.shop = new ShopService(this.client);
     this.wishlist = new WishlistService(this.client);
-    this.utility = new UtilityService(this.client);
+    this.utils = new UtilsService(this.client);
     this.notification = new NotficationService(this.client);
   }
 }

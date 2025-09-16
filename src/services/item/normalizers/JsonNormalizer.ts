@@ -1,5 +1,5 @@
 import { CommonJsonNormalizer } from '@/services/common';
-import { FileSizeConverter, LinkClassifier } from '@/services/utils';
+import { FileSizeConverter, LinkClassifier } from '@/utils';
 import {
   AudioPreview,
   Embed,

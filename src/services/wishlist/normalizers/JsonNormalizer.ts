@@ -1,5 +1,5 @@
 import { CommonHtmlNormalizer, CommonJsonNormalizer } from '@/services/common';
-import { CategoryConverter } from '@/services/utils';
+import { CategoryConverter } from '@/utils';
 import {
   BoothEvent,
   ItemSummary,
