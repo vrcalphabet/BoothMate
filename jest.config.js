@@ -4,6 +4,7 @@ const tsJestTransformCfg = createDefaultPreset().transform;
 
 /** @type {import("jest").Config} */
 module.exports = {
+  maxWorkers: 1,
   bail: 1,
   testEnvironment: 'node',
   testMatch: ['**/tests/**/*.test.ts'],

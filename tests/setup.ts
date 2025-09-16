@@ -13,5 +13,5 @@ afterAll(() => {
 });
 
 afterEach(async () => {
-  await new Promise((resolve) => setTimeout(resolve, 1250));
+  await new Promise((resolve) => setTimeout(resolve, 2000));
 });
