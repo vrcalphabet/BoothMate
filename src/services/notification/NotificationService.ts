@@ -32,7 +32,7 @@ export class NotficationService {
   }
 
   /**
-   * 未読の通知数を取得します。
+   * 未読の通知数(最大10件)を取得します。
    *
    * @returns 未読の通知数
    *

@@ -97,8 +97,8 @@ export class UtilsService {
    */
   extractItemId(url: string): number | undefined {
     const urlPatterns = [
-      /^https:\/\/booth\.pm\/[a-z-]+\/items\/(\d+)/,
-      /^https:\/\/[a-z0-9-]+\.booth\.pm\/items\/(\d+)/i,
+      /^https:\/\/booth\.pm\/[a-z-]+\/items\/(\d+)(?=$|[/?#])/,
+      /^https:\/\/[a-z0-9-]+\.booth\.pm\/items\/(\d+)(?=$|[/?#])/i,
     ];
 
     for (const pattern of urlPatterns) {
@@ -132,7 +132,7 @@ export class UtilsService {
    * ```
    */
   extractSubdomain(url: string): string | undefined {
-    const urlPattern = /^https:\/\/([a-z0-9-]+)\.booth\.pm/i;
+    const urlPattern = /^https:\/\/([a-z0-9-]+)\.booth\.pm(?=$|[/?#:])/i;
 
     const match = url.match(urlPattern);
     if (match && match[1]) {
@@ -165,8 +165,8 @@ export class UtilsService {
    */
   extractWishlistId(url: string): string | undefined {
     const urlPatterns = [
-      /^https:\/\/accounts\.booth\.pm\/wish_lists\/([a-z0-9]{8})/i,
-      /^https:\/\/booth\.pm\/wish_list_names\/([a-z0-9]{8})/i,
+      /^https:\/\/accounts\.booth\.pm\/wish_lists\/([a-z0-9]{8})(?=$|[/?#])/i,
+      /^https:\/\/booth\.pm\/wish_list_names\/([a-z0-9]{8})(?=$|[/?#])/i,
     ];
 
     for (const pattern of urlPatterns) {
@@ -202,7 +202,8 @@ export class UtilsService {
    * ```
    */
   extractItemListId(url: string): [subdomain: string, itemListId: string] | undefined {
-    const urlPattern = /^https:\/\/([a-z0-9-]+)\.booth\.pm\/item_lists\/([a-z0-9]{8})/i;
+    const urlPattern =
+      /^https:\/\/([a-z0-9-]+)\.booth\.pm\/item_lists\/([a-z0-9]{8})(?=$|[/?#])/i;
 
     const match = url.match(urlPattern);
     if (match && match[1] && match[2]) {
