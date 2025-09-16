@@ -67,7 +67,7 @@ await client.wishlist.addItem('pQ9TlbPV', 123456);
 await client.wishlist.removeItem('pQ9TlbPV', 123456);
 ```
 
-ここで紹介したAPIは，ほんの一部にしかすぎません。API一覧は，[ドキュメンテーション](https://vrcalphabet.github.io/BoothMate/)や[サンプル](https://github.com/vrcalphabet/BoothMate/tree/master/examples)をご覧ください。
+ここで紹介したAPIは，ほんの一部にしかすぎません。API一覧は，[ドキュメンテーション](https://vrcalphabet.github.io/BoothMate/classes/BoothMate.BoothMate.html)や[サンプル](https://github.com/vrcalphabet/BoothMate/tree/master/examples)をご覧ください。
 
 コードの書き方でお困りですか？お気軽に[DMでご相談ください！](https://x.com/messages/compose?recipient_id=1834886573860831234)
 
