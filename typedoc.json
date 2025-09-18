@@ -4,14 +4,14 @@
     "src/services/item/ItemService.ts",
     "src/services/shop/ShopService.ts",
     "src/services/wishlist/WishlistService.ts",
-    "src/services/utility/UtilityService.ts",
+    "src/services/utils/UtilsService.ts",
     "src/services/notification/NotificationService.ts",
     "src/types/enums.ts",
     "src/types/interfaces.ts"
   ],
   "exclude": [
     "src/types/services/**/*.ts",
-    "src/types/boothApi/**/*.ts",
+    "src/types/booth-api/**/*.ts",
     "src/types/extracted/**/*.ts",
     "src/types/normalized/**/*.ts"
   ],
