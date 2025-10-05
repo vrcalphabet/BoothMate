@@ -1,7 +1,7 @@
 import {
   ShopService,
   UtilsService,
-  NotficationService,
+  NotificationService,
   WishlistService,
   ItemService,
   HTTPClient,
@@ -21,7 +21,7 @@ export class BoothMate {
    * 通知の取得を行うサービスクラスです。
    * @experimental 実験的な機能であり、将来的に変更される可能性があります。
    */
-  readonly notification: NotficationService;
+  readonly notification: NotificationService;
 
   /**
    * BoothMateのインスタンスを作成します。
@@ -56,7 +56,7 @@ export class BoothMate {
     this.shop = new ShopService(this.client);
     this.wishlist = new WishlistService(this.client);
     this.utils = new UtilsService(this.client);
-    this.notification = new NotficationService(this.client);
+    this.notification = new NotificationService(this.client);
   }
 }
 
