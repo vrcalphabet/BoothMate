@@ -4,12 +4,8 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-TypeScriptで書かれたBooth用の非公式スクレイピングライブラリです。
+TypeScriptで書かれたBooth用の非公式スクレイピングライブラリです。[Boothの利用規約](#謝辞)に抵触しない範囲でご自由に利用ください。
 
-\
-　**このライブラリは、ガイドラインにより非推奨としてマークされました。**
-\
-　
 ## 使い方
 
 ### インポート・初期化
@@ -198,3 +194,5 @@ MIT License
 - オープンソースコミュニティ - 継続的なサポート
 
 ---
+
+**注意**: このライブラリは非公式です。Booth.pmの利用規約([サービス共通利用規約](https://policies.pixiv.net/#terms), [Booth利用規約](https://policies.pixiv.net/#booth))を遵守してご利用ください。また，各APIは1秒以上ごとに実行するなどしてBoothのサーバに負荷が掛からないように配慮してください。
