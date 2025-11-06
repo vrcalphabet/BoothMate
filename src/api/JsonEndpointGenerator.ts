@@ -138,7 +138,7 @@ export class JsonEndpointGenerator {
   /****************** NotficationService  *******************/
   /**********************************************************/
 
-  static notficationList(): EndpointUrlSpec {
+  static notificationList(): EndpointUrlSpec {
     const endpoint = `${this.baseAccountUrl}/activities/partial.json`;
     return { url: endpoint, requiresSession: true, requiresCsrf: false };
   }

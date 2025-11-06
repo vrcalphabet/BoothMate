@@ -10,7 +10,7 @@ export class JsonFetcher {
   }
 
   list(): Promise<BNotifications> {
-    const notificationUrl = EndpointGenerator.json.notficationList();
+    const notificationUrl = EndpointGenerator.json.notificationList();
     return this.client.get<BNotifications>(notificationUrl);
   }
 }

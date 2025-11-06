@@ -3,7 +3,7 @@ import { JsonFetcher } from './fetchers';
 import { HTTPClient } from '..';
 import { JsonNormalizer } from './normalizers';
 
-export class NotficationService {
+export class NotificationService {
   private jsonFetcher: JsonFetcher;
 
   constructor(client: HTTPClient) {
