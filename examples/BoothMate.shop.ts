@@ -1,8 +1,6 @@
-import { BoothMate } from '@/BoothMate';
-import { ItemList, ItemSummary, Shop, ShopItems } from '@/types';
-import 'dotenv/config';
+import { BoothMate, ItemList, ItemSummary, Shop, ShopItems } from 'boothmate';
 
-const client = new BoothMate(process.env.SESSION_TOKEN!, process.env.CSRF_TOKEN!);
+const client = new BoothMate();
 
 // すべてのサンプルにおいて，変数の型は省略可能です。必要に応じて指定してください。
 

@@ -13,10 +13,16 @@ TypeScriptで書かれたBooth用の非公式スクレイピングライブラ�
 ```typescript
 import { BoothMate } from 'boothmate';
 
-const client = new BoothMate('your_session_token', 'your_csrf_token');
+const client = new BoothMate({
+  sessionToken: 'your_session_token',
+  csrfToken: 'your_csrf_token'
+});
+
+// もしくはトークンを省略して初期化も可能です
+// const client = new BoothMate();
 ```
 
-このライブラリの使用には，セッショントークンとCSRFトークンの指定が必要です。
+このライブラリでは，セッショントークンやCSRFトークンを省略することもできます。トークンを指定した場合はログイン状態でのAPI操作が可能になり，省略した場合は公開データのみ取得できます。トークンの取得方法については，[オプション・設定](#オプション・設定)をご覧ください。
 
 ### 商品の情報を取得
 
@@ -104,10 +110,10 @@ pnpm add boothmate
 
 ### デバッグモード
 
-デバッグモードを有効にするには，BoothMateコンストラクタの第三引数に`true`を指定します。
+デバッグモードを有効にするには，オプションの`debug`に`true`を指定します。
 
 ```typescript
-const client = new BoothMate(sessionToken, csrfToken, true); // デバッグモード有効
+const client = new BoothMate({ debug: true }); // デバッグモード有効
 ```
 
 デバッグモードを有効にすると、HTTPリクエストの詳細がコンソールに出力されます(例)。
@@ -120,30 +126,6 @@ const client = new BoothMate(sessionToken, csrfToken, true); // デバッグモ�
 ## 貢献
 
 プロジェクトへの貢献を歓迎します！以下のルールに従うと，あなたの貢献がスムーズになります！
-
-### 開発環境セットアップ
-
-```bash
-# リポジトリをクローン
-git clone https://github.com/vrcalphabet/BoothMate.git
-cd BoothMate
-
-# 依存関係をインストール
-npm install
-
-# ビルド
-npm run build
-```
-
-- Node.jsは22.x以上を推奨しています。
-
-### コードスタイル
-
-- TypeScriptで記述すること
-- `any`型の使用は禁止(連想配列は，`interface`もしくは`Record`を使用してください)
-- Prettierを通すこと
-- ディレクトリ名はkebab-caseで統一すること
-- ファイル名・クラス名は`UpperCamelCase`で統一すること
 
 ### Issue / PR
 
@@ -173,6 +155,10 @@ MIT License
 ### v0.3.0 (2025-09-17)
 
 - utilityサービスクラスへのアクセスをutilsに名前変更した
+
+### v0.4.0 (2025-11-07)
+
+- トークンを省略して初期化できるようにした
 
 ## 短期目標
 

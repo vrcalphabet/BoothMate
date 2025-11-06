@@ -130,7 +130,7 @@ export class ItemService {
    *
    * @remarks
    * セッショントークン `sessionToken` は任意です。
-   * 
+   *
    * 指定すると、スキリストに追加済みかどうかの情報も含まれます。
    *
    * @example

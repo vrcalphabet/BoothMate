@@ -1,8 +1,10 @@
-import { BoothMate } from '@/BoothMate';
+import { BoothMate } from 'boothmate';
 import 'dotenv/config';
 import { WebAppManifest } from 'web-app-manifest';
 
-const client = new BoothMate(process.env.SESSION_TOKEN!, process.env.CSRF_TOKEN!);
+const client = new BoothMate({
+  sessionToken: process.env.SESSION_TOKEN!,
+});
 
 // すべてのサンプルにおいて，変数の型は省略可能です。必要に応じて指定してください。
 

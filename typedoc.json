@@ -7,6 +7,7 @@
     "src/services/utils/UtilsService.ts",
     "src/services/notification/NotificationService.ts",
     "src/types/enums.ts",
+    "src/types/errors.ts",
     "src/types/interfaces.ts"
   ],
   "exclude": [

@@ -1,5 +1,5 @@
-import { BoothMate } from '@/BoothMate';
 import {
+  BoothMate,
   AgeRestriction,
   BoothEvent,
   Category,
@@ -9,10 +9,9 @@ import {
   ItemWithContents,
   SearchResult,
   SortOrder,
-} from '@/types';
-import 'dotenv/config';
+} from 'boothmate';
 
-const client = new BoothMate(process.env.SESSION_TOKEN!, process.env.CSRF_TOKEN!);
+const client = new BoothMate();
 
 // すべてのサンプルにおいて，変数の型は省略可能です。必要に応じて指定してください。
 

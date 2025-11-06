@@ -60,6 +60,9 @@ export class BoothMate {
    *   csrfToken: process.env.CSRF_TOKEN!,
    * });
    *
+   * // もしくはトークンを省略して初期化も可能です
+   * // const client = new BoothMate();
+   *
    * await client.item.search('VRChat');
    * ```
    */
@@ -80,6 +83,18 @@ export class BoothMate {
   /**
    * トークンやオプションを更新します。
    * @param options トークンやデバッグオプションを含む設定オブジェクト
+   *
+   * @example
+   * ```ts
+   * // セッションの変更
+   * client.setOptions({
+   *   sessionToken: process.env.SESSION_TOKEN!,
+   *   csrfToken: process.env.CSRF_TOKEN!,
+   * });
+   *
+   * // セッションのクリア
+   * client.setOptions({});
+   * ```
    */
   setOptions(options: BoothMateOptions): void {
     this.client.setOptions({
