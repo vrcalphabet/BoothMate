@@ -22,6 +22,11 @@ export class WishlistService {
    *
    * @returns ウィッシュリストの名前とIDのリスト
    *
+   * @remarks
+   * セッショントークン `sessionToken` は**必須**です。
+   *
+   * 指定せずに実行すると `AuthError` が発生します。
+   *
    * @example
    * ```ts
    * // ウィッシュリストの名前を出力
@@ -45,6 +50,11 @@ export class WishlistService {
    * @param wishlistId ウィッシュリストのID
    * @param page 取得するページ番号(デフォルト: 1)
    * @returns ウィッシュリストの内容(存在しないまたは非公開の場合はundefined)
+   *
+   * @remarks
+   * 自分が作成した非公開のスキリストの取得に限り、セッショントークン `sessionToken` は**必須**です。
+   *
+   * 指定せずに実行すると `AuthError` が発生します。
    *
    * @example
    * ```ts
@@ -78,6 +88,11 @@ export class WishlistService {
    * @param page 取得するページ番号(デフォルト: 1)
    * @returns デフォルトのウィッシュリストの内容
    *
+   * @remarks
+   * セッショントークン `sessionToken` は**必須**です。
+   *
+   * 指定せずに実行すると `AuthError` が発生します。
+   *
    * @example
    * ```ts
    * // デフォルトのウィッシュリストの1番目の商品名を出力
@@ -100,6 +115,11 @@ export class WishlistService {
    *
    * @param page 取得するページ番号(デフォルト: 1)
    * @returns 未分類のウィッシュリストの内容
+   *
+   * @remarks
+   * セッショントークン `sessionToken` は**必須**です。
+   *
+   * 指定せずに実行すると `AuthError` が発生します。
    *
    * @example
    * ```ts
@@ -124,6 +144,11 @@ export class WishlistService {
    * @param itemId 確認する商品のID
    * @param wishlistId 確認するウィッシュリストのID(省略時はデフォルトのウィッシュリスト)
    * @returns 商品がウィッシュリストに含まれている場合true、含まれていない場合false
+   *
+   * @remarks
+   * セッショントークン `sessionToken` は**必須**です。
+   *
+   * 指定せずに実行すると `AuthError` が発生します。
    *
    * @example
    * ```ts
@@ -165,6 +190,11 @@ export class WishlistService {
    *                    - 省略時: デフォルトのウィッシュリストに追加
    *                    - 文字列: 指定されたウィッシュリストに追加
    *                    - 配列: 複数のウィッシュリストに追加
+   *
+   * @remarks
+   * セッショントークン `sessionToken` とCSRFトークン `csrfToken` は**必須**です。
+   *
+   * 指定せずに実行すると `AuthError` が発生します。
    *
    * @example
    * ```ts
@@ -209,6 +239,11 @@ export class WishlistService {
    *                    - 省略時: デフォルトのウィッシュリストから削除
    *                    - 文字列: 指定されたウィッシュリストから削除
    *                    - 配列: 複数のウィッシュリストから削除
+   *
+   * @remarks
+   * セッショントークン `sessionToken` とCSRFトークン `csrfToken` は**必須**です。
+   *
+   * 指定せずに実行すると `AuthError` が発生します。
    *
    * @example
    * ```ts

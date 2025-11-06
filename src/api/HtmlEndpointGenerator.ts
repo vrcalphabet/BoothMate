@@ -1,6 +1,7 @@
 import { AgeRestriction, ItemType, SortOrder } from '@/types';
 import { Validator } from '@/utils';
 import { NSearchFilter } from '@/types/normalized';
+import { EndpointUrlSpec } from '@/types/internal';
 
 export class HtmlEndpointGenerator {
   protected static baseUrl: string = 'https://booth.pm';
@@ -13,7 +14,7 @@ export class HtmlEndpointGenerator {
   /********************** ItemService  **********************/
   /**********************************************************/
 
-  static search(filter: NSearchFilter): string {
+  static search(filter: NSearchFilter): EndpointUrlSpec {
     let type: 'query' | 'event' | null = null;
 
     const endpoint = new URL(`${this.baseUrl}/ja/`);
@@ -63,12 +64,13 @@ export class HtmlEndpointGenerator {
       endpoint.searchParams.append('tags[]', tag);
     }
 
-    return endpoint.href;
+    return { url: endpoint.href, requiresSession: false, requiresCsrf: false };
   }
 
-  static getItem(itemId: number): string | undefined {
+  static getItem(itemId: number): EndpointUrlSpec | undefined {
     try {
-      return `${this.baseUrl}/ja/items/${Validator.validateItemId(itemId)}`;
+      const endpoint = `${this.baseUrl}/ja/items/${Validator.validateItemId(itemId)}`;
+      return { url: endpoint, requiresSession: false, requiresCsrf: false };
     } catch {
       return undefined;
     }
@@ -78,13 +80,13 @@ export class HtmlEndpointGenerator {
   /********************** ShopService  **********************/
   /**********************************************************/
 
-  static getShopItems(subdomain: string, page: number): string | undefined {
+  static getShopItems(subdomain: string, page: number): EndpointUrlSpec | undefined {
     try {
       const endpoint = new URL(
         `https://${Validator.validateSubdomain(subdomain)}.booth.pm/items`,
       );
       endpoint.searchParams.set('page', Validator.validatePage(page));
-      return endpoint.href;
+      return { url: endpoint.href, requiresSession: false, requiresCsrf: false };
     } catch {
       return undefined;
     }
@@ -94,13 +96,13 @@ export class HtmlEndpointGenerator {
     subdomain: string,
     itemListId: string,
     page: number,
-  ): string | undefined {
+  ): EndpointUrlSpec | undefined {
     try {
       const endpoint = new URL(
         `https://${Validator.validateSubdomain(subdomain)}.booth.pm/item_lists/${Validator.validateItemListId(itemListId)}`,
       );
       endpoint.searchParams.set('page', Validator.validatePage(page));
-      return endpoint.href;
+      return { url: endpoint.href, requiresSession: false, requiresCsrf: false };
     } catch {
       return undefined;
     }

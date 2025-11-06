@@ -1,6 +1,7 @@
 import { HTTPClient } from '@/services';
 import { EndpointGenerator } from '@/api';
 import { WebAppManifest } from 'web-app-manifest';
+import { AuthError } from '@/types';
 
 export class JsonFetcher {
   private client: HTTPClient;
@@ -19,7 +20,11 @@ export class JsonFetcher {
     try {
       await this.client.head(wishlistNameUrl);
       return true;
-    } catch {
+    } catch (e) {
+      if (e instanceof AuthError) {
+        throw e;
+      }
+
       return false;
     }
   }

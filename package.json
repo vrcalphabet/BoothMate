@@ -1,6 +1,6 @@
 {
   "name": "boothmate",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Booth用の非公式スクレイピングライブラリ",
   "main": "dist/BoothMate.js",
   "types": "dist/BoothMate.d.ts",
@@ -14,7 +14,7 @@
     "clean": "rmdir /s /q dist docs",
     "docs": "npx typedoc",
     "test": "npm run format && jest",
-    "old-test": "npm run build && node dist/src/test"
+    "old-test": "npm run build && node dist/test"
   },
   "homepage": "https://github.com/vrcalphabet/BoothMate",
   "bugs": {

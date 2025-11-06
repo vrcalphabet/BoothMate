@@ -6,6 +6,7 @@ import {
   BWishlistName,
   BWishlistMetadata,
 } from '@/types/booth-api';
+import { AuthError } from '@/types';
 
 export class JsonFetcher {
   private client: HTTPClient;
@@ -20,16 +21,24 @@ export class JsonFetcher {
   }
 
   async getItems(wishlistId: string, page: number): Promise<BWishlist | undefined> {
+    const wishlistUrl = EndpointGenerator.json.getWishlistItems(wishlistId, page);
+    if (!wishlistUrl) return undefined;
+
     try {
+      console.log(wishlistUrl);
+      return await this.client.get<BWishlist>(wishlistUrl);
+    } catch {
       const wishlistLocalUrl = EndpointGenerator.json.getLocalWishlist(wishlistId, page);
       if (!wishlistLocalUrl) return undefined;
 
-      return await this.client.get<BWishlist>(wishlistLocalUrl);
-    } catch {
-      const wishlistUrl = EndpointGenerator.json.getWishlistItems(wishlistId, page);
-      if (!wishlistUrl) return undefined;
-
-      return await this.client.get<BWishlist>(wishlistUrl);
+      try {
+        return await this.client.get<BWishlist>(wishlistLocalUrl);
+      } catch (e) {
+        if (e instanceof AuthError) {
+          throw e;
+        }
+        return undefined;
+      }
     }
   }
 
@@ -44,18 +53,21 @@ export class JsonFetcher {
   }
 
   async getMetadata(wishlistId: string): Promise<BWishlistMetadata | undefined> {
-    const wishlistNameLocalUrl = EndpointGenerator.json.localWishlistName(wishlistId);
-    if (!wishlistNameLocalUrl) return undefined;
+    const wishlistNameUrl = EndpointGenerator.json.wishlistName(wishlistId);
+    if (!wishlistNameUrl) return undefined;
 
     try {
-      return await this.client.get<BWishlistMetadata>(wishlistNameLocalUrl);
+      return await this.client.get<BWishlistMetadata>(wishlistNameUrl);
     } catch {
-      const wishlistNameUrl = EndpointGenerator.json.wishlistName(wishlistId);
-      if (!wishlistNameUrl) return undefined;
+      const wishlistNameLocalUrl = EndpointGenerator.json.localWishlistName(wishlistId);
+      if (!wishlistNameLocalUrl) return undefined;
 
       try {
-        return await this.client.get<BWishlistMetadata>(wishlistNameUrl);
-      } catch {
+        return await this.client.get<BWishlistMetadata>(wishlistNameLocalUrl);
+      } catch (e) {
+        if (e instanceof AuthError) {
+          throw e;
+        }
         return undefined;
       }
     }
@@ -69,32 +81,38 @@ export class JsonFetcher {
   }
 
   async post(itemId: number): Promise<boolean> {
-    const addItemUrl = EndpointGenerator.json.wishlist(itemId);
+    const addItemUrl = EndpointGenerator.json.wishlistAction(itemId);
     if (!addItemUrl) return false;
 
     try {
       await this.client.post(addItemUrl);
       return true;
-    } catch {
+    } catch (e) {
+      if (e instanceof AuthError) {
+        throw e;
+      }
       return false;
     }
   }
 
   async patch(itemId: number, wishlistIds: string[]): Promise<void> {
-    const addItemUrl = EndpointGenerator.json.hasItem(itemId);
-    if (!addItemUrl) return;
+    const patchItemUrl = EndpointGenerator.json.hasItem(itemId);
+    if (!patchItemUrl) return;
 
     const body = JSON.stringify({ wish_list_name_codes: wishlistIds });
-    await this.client.patch(addItemUrl, body);
+    await this.client.patch(patchItemUrl, body);
   }
 
   async delete(itemId: number): Promise<void> {
-    const removeItemUrl = EndpointGenerator.json.wishlist(itemId);
+    const removeItemUrl = EndpointGenerator.json.wishlistAction(itemId);
     if (!removeItemUrl) return;
 
     try {
       await this.client.delete(removeItemUrl);
-    } catch {
+    } catch (e) {
+      if (e instanceof AuthError) {
+        throw e;
+      }
       return;
     }
   }

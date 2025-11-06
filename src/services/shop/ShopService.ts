@@ -52,6 +52,10 @@ export class ShopService {
    * @param page 取得するページ番号(デフォルト: 1)
    * @returns ショップの商品一覧(ショップが存在しない場合はundefined)
    *
+   * @remarks
+   * セッショントークン `sessionToken` は任意です。
+   * 指定すると、スキリストに追加済みかどうかの情報も各商品に含まれます。
+   *
    * @example
    * ```ts
    * // ショップの最新の商品の商品名を出力
@@ -87,6 +91,10 @@ export class ShopService {
    *                  例: `https://example.booth.pm/item_lists/8OVTLANn` → `8OVTLANn`
    * @param page 取得するページ番号(デフォルト: 1)
    * @returns 商品リスト(商品リストが存在しない場合はundefined)
+   *
+   * @remarks
+   * セッショントークン `sessionToken` は任意です。
+   * 指定すると、スキリストに追加済みかどうかの情報も各商品に含まれます。
    *
    * @example
    * ```ts

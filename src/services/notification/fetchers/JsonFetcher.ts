@@ -1,6 +1,5 @@
 import { HTTPClient } from '@/services';
 import { EndpointGenerator } from '@/api';
-import { Notification } from '@/types';
 import { BNotifications } from '@/types/booth-api';
 
 export class JsonFetcher {

@@ -7,6 +7,26 @@ import {
   HTTPClient,
 } from './services';
 
+/**
+ * BoothMateのインスタンス初期化用オプション
+ */
+export interface BoothMateOptions {
+  /**
+   * セッション識別用のCookie値( `_plaza_session_nktz7u` の値)。
+   * アカウントの識別と認証に使用します（任意）。
+   */
+  sessionToken?: string;
+  /**
+   * CSRF保護用のトークン（ `meta[name="csrf-token"]` から取得）。
+   * スキリストの操作（スキ！の追加・編集・削除）に必要です（任意）。
+   */
+  csrfToken?: string;
+  /**
+   * HTTPリクエストのデバッグモードの有効/無効（省略時はfalse、任意）。
+   */
+  debug?: boolean;
+}
+
 export class BoothMate {
   private client: HTTPClient;
   /** 商品の検索・取得を行うサービスクラスです。 */
@@ -26,30 +46,28 @@ export class BoothMate {
   /**
    * BoothMateのインスタンスを作成します。
    *
-   * 認証に必要なトークンを設定してBooth.pmのAPIにアクセスできるようにします。
+   * 認証に必要なトークンやオプションを設定してBooth.pmのAPIにアクセスできるようにします。
    *
-   * @param sessionToken セッション認証用のCookie値(`_plaza_session_nktz7u`の値)
-   * @param csrfToken CSRF保護用のトークン(`meta[name="csrf-token"]`から取得)
-   * @param debug デバッグモードの有効/無効(デフォルト: false)
+   * @param options トークンやデバッグオプションを含む設定オブジェクト
    *
    * @example
    * ```ts
    * import 'dotenv/config';
    * import { BoothMate } from 'boothmate';
    *
-   * const client = new BoothMate(
-   *   process.env.SESSION_TOKEN!,
-   *   process.env.CSRF_TOKEN!
-   * );
+   * const client = new BoothMate({
+   *   sessionToken: process.env.SESSION_TOKEN!,
+   *   csrfToken: process.env.CSRF_TOKEN!,
+   * });
    *
    * await client.item.search('VRChat');
    * ```
    */
-  constructor(sessionToken: string, csrfToken: string, debug = false) {
+  constructor(options: BoothMateOptions = {}) {
     this.client = new HTTPClient({
-      sessionToken,
-      csrfToken,
-      debug,
+      sessionToken: options.sessionToken,
+      csrfToken: options.csrfToken,
+      debug: options.debug ?? false,
     });
 
     this.item = new ItemService(this.client);
@@ -57,6 +75,26 @@ export class BoothMate {
     this.wishlist = new WishlistService(this.client);
     this.utils = new UtilsService(this.client);
     this.notification = new NotficationService(this.client);
+  }
+
+  /**
+   * トークンやオプションを更新します。
+   * @param options トークンやデバッグオプションを含む設定オブジェクト
+   */
+  setOptions(options: BoothMateOptions): void {
+    this.client.setOptions({
+      sessionToken: options.sessionToken,
+      csrfToken: options.csrfToken,
+      debug: options.debug ?? false,
+    });
+  }
+
+  /**
+   * 現在のトークンやオプションを取得します。
+   * @returns 現在の設定オブジェクト
+   */
+  getOptions(): BoothMateOptions & { debug: boolean } {
+    return this.client.getOptions();
   }
 }
 

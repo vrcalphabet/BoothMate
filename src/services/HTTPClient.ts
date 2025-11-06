@@ -1,40 +1,99 @@
+import { AuthError } from '@/types';
+import { EndpointUrlSpec } from '@/types/internal';
 import axios, { AxiosError } from 'axios';
 import chalk from 'chalk';
 
+interface HTTPClientOptions {
+  sessionToken?: string;
+  csrfToken?: string;
+  debug: boolean;
+}
+
 export class HTTPClient {
   private cookies: Record<string, string> = {};
-  private csrfToken: string = '';
+  private sessionToken?: string;
+  private csrfToken?: string;
   private debug: boolean = false;
 
-  constructor(config: { sessionToken: string; csrfToken: string; debug: boolean }) {
-    this.cookies['_plaza_session_nktz7u'] = config.sessionToken;
-    this.cookies['adult'] = 't';
-    this.csrfToken = config.csrfToken;
-    this.debug = config.debug;
+  constructor(options: HTTPClientOptions) {
+    this.setOptions(options);
   }
 
-  get<T>(url: string): Promise<T> {
-    return this.request<T>('GET', url);
+  setOptions(options: HTTPClientOptions): void {
+    if (options.sessionToken) {
+      this.sessionToken = options.sessionToken;
+      this.cookies['_plaza_session_nktz7u'] = options.sessionToken;
+    } else {
+      this.sessionToken = undefined;
+      delete this.cookies['_plaza_session_nktz7u'];
+    }
+
+    if (options.csrfToken) {
+      this.csrfToken = options.csrfToken;
+    } else {
+      this.csrfToken = undefined;
+    }
+
+    this.debug = options.debug;
   }
 
-  getHtml(url: string): Promise<string> {
-    return this.request('GET', url, true);
+  getOptions(): HTTPClientOptions {
+    return {
+      sessionToken: this.sessionToken,
+      csrfToken: this.csrfToken,
+      debug: this.debug,
+    };
   }
 
-  head(url: string): Promise<void> {
-    return this.request('HEAD', url);
+  private ensureTokens({ requiresSession, requiresCsrf }: EndpointUrlSpec): void {
+    const hasSession = !!this.sessionToken;
+    const hasCsrf = !!this.csrfToken;
+
+    if (requiresSession && requiresCsrf && !hasSession && !hasCsrf) {
+      throw new AuthError(
+        'リクエストを実行するにはセッショントークンとCSRFトークンの両方が必要ですが、どちらも指定されていません。',
+      );
+    }
+    if (requiresSession && !hasSession) {
+      throw new AuthError(
+        'リクエストを実行するにはセッショントークンが必要ですが、指定されていません。',
+      );
+    }
+    if (requiresCsrf && !hasCsrf) {
+      throw new AuthError(
+        'リクエストを実行するにはCSRFトークンが必要ですが、指定されていません。',
+      );
+    }
   }
 
-  post<T>(url: string, body?: string): Promise<T> {
-    return this.request<T>('POST', url, false, body);
+  get<T = void>(spec: EndpointUrlSpec): Promise<T> {
+    this.ensureTokens(spec);
+    return this.request<T>('GET', spec.url);
   }
 
-  patch<T>(url: string, body?: string): Promise<T> {
-    return this.request<T>('PATCH', url, false, body);
+  getHtml(spec: EndpointUrlSpec): Promise<string> {
+    this.ensureTokens(spec);
+    return this.request('GET', spec.url, true);
   }
 
-  delete<T>(url: string): Promise<T> {
-    return this.request<T>('DELETE', url);
+  head(spec: EndpointUrlSpec): Promise<void> {
+    this.ensureTokens(spec);
+    return this.request('HEAD', spec.url);
+  }
+
+  post<T = void>(spec: EndpointUrlSpec, body?: string): Promise<T> {
+    this.ensureTokens(spec);
+    return this.request<T>('POST', spec.url, false, body);
+  }
+
+  patch<T = void>(spec: EndpointUrlSpec, body?: string): Promise<T> {
+    this.ensureTokens(spec);
+    return this.request<T>('PATCH', spec.url, false, body);
+  }
+
+  delete<T = void>(spec: EndpointUrlSpec): Promise<T> {
+    this.ensureTokens(spec);
+    return this.request<T>('DELETE', spec.url);
   }
 
   private async request<T>(

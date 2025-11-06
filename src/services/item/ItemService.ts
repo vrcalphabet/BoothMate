@@ -27,6 +27,10 @@ export class ItemService {
    * @param filter 検索条件(カテゴリ、価格範囲など)
    * @returns 検索結果(商品リストとページネーション情報を含む)
    *
+   * @remarks
+   * セッショントークン `sessionToken` は任意です。
+   * 指定すると、スキリストに追加済みかどうかの情報も各商品に含まれます。
+   *
    * @example
    * ```ts
    * // すべての商品を取得
@@ -52,6 +56,10 @@ export class ItemService {
    *
    * @param filter 検索条件(カテゴリ、価格範囲など)
    * @returns 検索結果(商品リストとページネーション情報を含む)
+   *
+   * @remarks
+   * セッショントークン `sessionToken` は任意です。
+   * 指定すると、スキリストに追加済みかどうかの情報も各商品に含まれます。
    *
    * @example
    * ```ts
@@ -92,7 +100,7 @@ export class ItemService {
   /**
    * 商品の存在確認を行います。
    *
-   * 指定されたIDの商品が存在するかを確認します。`item.get`より軽量です。
+   * 指定されたIDの商品が存在するかを確認します。`item.get`の戻り値で判断するより高速です。
    *
    * @param itemId 確認する商品のID
    * @returns 商品が存在する場合true、存在しない場合false
@@ -119,6 +127,11 @@ export class ItemService {
    *                      - false: 上記を除外した詳細情報を取得
    *
    * @returns 商品の詳細情報(存在しない場合はundefined)
+   *
+   * @remarks
+   * セッショントークン `sessionToken` は任意です。
+   * 
+   * 指定すると、スキリストに追加済みかどうかの情報も含まれます。
    *
    * @example
    * ```ts

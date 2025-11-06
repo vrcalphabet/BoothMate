@@ -17,6 +17,11 @@ export class NotficationService {
    *
    * @returns 通知の配列
    *
+   * @remarks
+   * セッショントークン `sessionToken` は**必須**です。
+   *
+   * 指定せずに実行すると `AuthError` が発生します。
+   *
    * @example
    * ```ts
    * // 通知のタイトルを出力
@@ -35,6 +40,11 @@ export class NotficationService {
    * 未読の通知数(最大10件)を取得します。
    *
    * @returns 未読の通知数
+   *
+   * @remarks
+   * セッショントークン `sessionToken` は**必須**です。
+   *
+   * 指定せずに実行すると `AuthError` が発生します。
    *
    * @example
    * ```ts
