@@ -1,12 +1,7 @@
 import { Category } from '@/types';
 import { BoothMate } from '@/BoothMate';
-import 'dotenv/config';
 
-if (!process.env.SESSION_TOKEN || !process.env.CSRF_TOKEN) {
-  throw new Error('.envにSESSION_TOKENとCSRF_TOKENを設定してください');
-}
-
-const client = new BoothMate(process.env.SESSION_TOKEN!, process.env.CSRF_TOKEN!, true);
+const client = new BoothMate({ debug: true });
 
 describe('BoothMate.item', () => {
   describe('BoothMate.item.search', () => {

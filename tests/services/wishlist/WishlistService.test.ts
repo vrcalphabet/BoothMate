@@ -5,7 +5,11 @@ if (!process.env.SESSION_TOKEN || !process.env.CSRF_TOKEN) {
   throw new Error('.envにSESSION_TOKENとCSRF_TOKENを設定してください');
 }
 
-const client = new BoothMate(process.env.SESSION_TOKEN!, process.env.CSRF_TOKEN!, true);
+const client = new BoothMate({
+  sessionToken: process.env.SESSION_TOKEN!,
+  csrfToken: process.env.CSRF_TOKEN!,
+  debug: true
+});
 
 describe('BoothMate.wishlist', () => {
   describe('BoothMate.wishlist.getNames', () => {
@@ -19,6 +23,12 @@ describe('BoothMate.wishlist', () => {
   describe('BoothMate.wishlist.getItems', () => {
     it('有効なウィッシュリストIDで連想配列が返るか？', async () => {
       const result = await client.wishlist.getItems(global.WISHLIST_ID);
+      expect(result).toBeDefined();
+      expect(isObject(result)).toBe(true);
+    });
+    
+    it('作成した非公開のウィッシュリストIDで連想配列が返るか？', async () => {
+      const result = await client.wishlist.getItems(global.INVISIBLE_WISHLIST_ID);
       expect(result).toBeDefined();
       expect(isObject(result)).toBe(true);
     });

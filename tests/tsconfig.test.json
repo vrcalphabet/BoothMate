@@ -2,7 +2,10 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "noEmit": true,
-    "types": ["jest", "node"]
+    "declaration": false,
+    "types": ["jest", "node"],
+    "sourceMap": false,
+    "inlineSourceMap": false
   },
-  "include": ["src", "tests", "jest.config.js"]
+  "include": ["src", "tests", "jest.config.js", "global.d.ts"]
 }

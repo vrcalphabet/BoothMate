@@ -2,6 +2,7 @@ declare global {
   var WISHLIST_ID: string;
   var ITEM_ID_INCLUDED: number;
   var ITEM_ID_NOT_INCLUDED: number;
+  var INVISIBLE_WISHLIST_ID: string;
   var SHOP_SUBDOMAIN: string;
   var ONE_PAGE_SHOP_SUBDOMAIN: string;
   var NO_ITEMS_SHOP_SUBDOMAIN: string;
