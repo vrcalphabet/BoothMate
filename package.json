@@ -1,6 +1,6 @@
 {
   "name": "boothmate",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Booth用の非公式スクレイピングライブラリ",
   "main": "dist/main.mjs",
   "types": "dist/main.d.mts",
