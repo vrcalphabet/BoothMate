@@ -7,6 +7,7 @@ class SearchFilterNormalizer {
     return {
       page: Math.min(filter.page ?? 1, 3333),
       query: this.stringify(query) ?? '',
+      query_any: filter.query_any ?? [],
       exclude_query: this.toArray(filter.exclude_query),
       tags: this.toArray(filter.tags),
       category: filter.category,

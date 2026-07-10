@@ -17,6 +17,8 @@ export interface SearchFilter {
   page?: number
   /** 検索キーワード。配列の場合は半角スペース区切りで結合されます。 */
   query?: string | string[]
+  /** OR条件の検索キーワード。 */
+  query_any?: string[]
   /** 除外するキーワード */
   exclude_query?: string | string[]
   /** タグ */

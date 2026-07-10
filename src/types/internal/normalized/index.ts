@@ -10,6 +10,7 @@ import {
 export interface NSearchFilter {
   page: number
   query: string
+  query_any: string[]
   exclude_query: string[]
   tags: string[]
   category?: Category | SubCategory

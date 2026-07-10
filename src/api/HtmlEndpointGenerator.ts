@@ -57,6 +57,9 @@ export class HtmlEndpointGenerator {
       endpoint.searchParams.set('max_price', String(filter.max_price))
     }
 
+    for (const q of filter.query_any) {
+      endpoint.searchParams.append('or_words[]', q)
+    }
     for (const excludeQuery of filter.exclude_query) {
       endpoint.searchParams.append('except_words[]', excludeQuery)
     }

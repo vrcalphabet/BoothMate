@@ -29,8 +29,10 @@ const client = new BoothMate();
     page: 1, // ページ番号 (1ページ目)
     query: 'vrchat', // 検索キーワード
     // query: ['vrchat', 'blender'], // 検索キーワード(配列)
+    query_any: ['髪', 'hair'], // OR条件の検索キーワード
     exclude_query: '共通', // 除外キーワード
     // exclude_query: ['共通', 'サンプル'], // 除外キーワード(配列)
+    // この場合は、 'vrchat' and ('髪' or 'hair') and (not '共通') のクエリで検索されます。
     category: Category.THREE_D_MODEL, // カテゴリ (3Dモデル)
     // category: SubCategory.THREE_D_CHARACTER, // サブカテゴリ (3Dキャラクター)
     event: BoothEvent.vrcreative, // イベント (VRCくりえいてぃ部)
