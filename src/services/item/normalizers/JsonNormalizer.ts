@@ -27,7 +27,7 @@ export class JsonNormalizer {
     }
 
     return thumbnails.map<ImageInfo>((thumbnail) => {
-      const imageId = thumbnail.match(/\/([\w-]+\/i\/\d+\/[\w-]+)/)![1];
+      const imageId = thumbnail.match(/\/([\w-]+\/i\/\d+\/[\w-]+?)(?:_base_resized)?\./)![1]
 
       return {
         original: `https://booth.pximg.net/${imageId}.png`,

@@ -53,7 +53,7 @@ export class CommonHtmlNormalizer {
 
   static thumbnails(thumbnails: string[]): ImageInfo[] {
     return thumbnails.map<ImageInfo>((thumbnail) => {
-      const imageId = thumbnail.match(/\/([\w-]+\/i\/\d+\/[\w-]+)/);
+      const imageId = thumbnail.match(/\/([\w-]+\/i\/\d+\/[\w-]+?)(?:_base_resized)?\./)
 
       return {
         original: imageId ? `https://booth.pximg.net/${imageId[1]}.png` : thumbnail,
