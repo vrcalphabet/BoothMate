@@ -34,6 +34,7 @@ export class HTTPClient {
       this.csrfToken = undefined
     }
 
+    this.cookies['adult'] = 't'
     this.debug = options.debug
   }
 
