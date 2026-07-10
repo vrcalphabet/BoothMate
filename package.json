@@ -2,19 +2,18 @@
   "name": "boothmate",
   "version": "0.4.0",
   "description": "Booth用の非公式スクレイピングライブラリ",
-  "main": "dist/main.js",
-  "types": "dist/main.d.ts",
+  "main": "dist/main.mjs",
+  "types": "dist/main.d.mts",
   "files": [
     "dist",
     "README.md"
   ],
   "scripts": {
-    "format": "prettier --write \"src/**/*.ts\" --log-level warn",
-    "build": "npm run format && tsc && tsc-alias",
-    "clean": "rmdir /s /q dist docs",
+    "format": "prettier --write \"{src,tests}/**/*.ts\"",
+    "build": "tsdown",
     "docs": "npx typedoc",
-    "test": "npm run format && jest",
-    "old-test": "npm run build && node dist/test"
+    "test": "jest",
+    "old-test": "npm run build && node test.js"
   },
   "homepage": "https://github.com/vrcalphabet/BoothMate",
   "bugs": {
@@ -27,7 +26,7 @@
   "keywords": [],
   "author": "",
   "license": "MIT",
-  "type": "commonjs",
+  "type": "module",
   "dependencies": {
     "axios": "^1.11.0",
     "axios-cookiejar-support": "^6.0.4",
