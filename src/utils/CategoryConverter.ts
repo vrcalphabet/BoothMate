@@ -107,7 +107,9 @@ export class CategoryConverter {
       // 3Dモデル関連
       [SubCategory.THREE_D_CHARACTER, Category.THREE_D_MODEL],
       [SubCategory.THREE_D_OUTFIT, Category.THREE_D_MODEL],
+      [SubCategory.THREE_D_HAIR, Category.THREE_D_MODEL],
       [SubCategory.THREE_D_ORNAMENT, Category.THREE_D_MODEL],
+      [SubCategory.THREE_D_SHOES, Category.THREE_D_MODEL],
       [SubCategory.THREE_D_PROP, Category.THREE_D_MODEL],
       [SubCategory.THREE_D_TEXTURE, Category.THREE_D_MODEL],
       [SubCategory.THREE_D_TOOL_SYSTEM, Category.THREE_D_MODEL],

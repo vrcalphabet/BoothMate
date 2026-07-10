@@ -208,8 +208,12 @@ export enum SubCategory {
   THREE_D_CHARACTER = '3Dキャラクター',
   /** 3D衣装 */
   THREE_D_OUTFIT = '3D衣装',
+  /** 3D髪型 */
+  THREE_D_HAIR = '3D髪型',
   /** 3D装飾品 */
   THREE_D_ORNAMENT = '3D装飾品',
+  /** 3D靴 */
+  THREE_D_SHOES = '3D靴',
   /** 3D小道具 */
   THREE_D_PROP = '3D小道具',
   /** 3Dテクスチャ */
