@@ -1,4 +1,4 @@
-import { WebAppManifest } from 'web-app-manifest';
+import { type WebAppManifest } from 'web-app-manifest';
 import { JsonFetcher } from './fetchers';
 import { HTTPClient } from '..';
 import { FileSizeConverter } from '@/utils';

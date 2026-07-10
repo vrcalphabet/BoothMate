@@ -2,17 +2,17 @@ import { CommonHtmlNormalizer, CommonJsonNormalizer } from '@/services/common';
 import { CategoryConverter } from '@/utils';
 import {
   BoothEvent,
-  ItemSummary,
-  Wishlist,
-  WishlistBasic,
-  WishlistSummary,
+  type ItemSummary,
+  type Wishlist,
+  type WishlistBasic,
+  type WishlistSummary,
 } from '@/types';
 import {
-  BItemSummary,
-  BWishlist,
-  BWishlistCounts,
-  BWishlistMetadata,
-  BWishlistName,
+  type BItemSummary,
+  type BWishlist,
+  type BWishlistCounts,
+  type BWishlistMetadata,
+  type BWishlistName,
 } from '@/types/booth-api';
 
 export class JsonNormalizer {

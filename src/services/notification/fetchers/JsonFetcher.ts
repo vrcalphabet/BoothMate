@@ -1,6 +1,6 @@
 import { HTTPClient } from '@/services';
 import { EndpointGenerator } from '@/api';
-import { BNotifications } from '@/types/booth-api';
+import { type BNotifications } from '@/types/booth-api';
 
 export class JsonFetcher {
   private client: HTTPClient;

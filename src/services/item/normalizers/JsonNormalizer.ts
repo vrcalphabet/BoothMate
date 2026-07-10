@@ -1,16 +1,16 @@
 import { CommonJsonNormalizer } from '@/services/common';
 import { FileSizeConverter, LinkClassifier } from '@/utils';
 import {
-  AudioPreview,
-  Embed,
-  ImageInfo,
-  ImageInfoWithCaption,
-  Item,
-  ItemFileInfo,
-  ItemTrackInfoWithFiles,
-  ItemVariation,
+  type AudioPreview,
+  type Embed,
+  type ImageInfo,
+  type ImageInfoWithCaption,
+  type Item,
+  type ItemFileInfo,
+  type ItemTrackInfoWithFiles,
+  type ItemVariation,
 } from '@/types';
-import { BItem, BItemDownloadable, BItemImages, BItemVariation } from '@/types/booth-api';
+import { type BItem, type BItemDownloadable, type BItemImages, type BItemVariation } from '@/types/booth-api';
 
 export class JsonNormalizer {
   private constructor() {}

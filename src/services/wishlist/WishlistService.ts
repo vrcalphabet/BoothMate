@@ -1,9 +1,9 @@
 import { isEqual } from 'lodash';
 import { JsonFetcher } from './fetchers';
 import { JsonNormalizer } from './normalizers';
-import { Wishlist, WishlistBasic, WishlistSummary } from '@/types';
+import { type Wishlist, type WishlistBasic, type WishlistSummary } from '@/types';
 import { HTTPClient } from '..';
-import { BItemInWishlist } from '@/types/booth-api';
+import { type BItemInWishlist } from '@/types/booth-api';
 import { CommonJsonFetcher } from '../common';
 
 export class WishlistService {

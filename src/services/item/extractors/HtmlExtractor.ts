@@ -1,12 +1,12 @@
 import { cheerio } from '@/services';
 import type { Element } from 'domhandler';
 import {
-  EAudioPreview,
-  EItemContent,
-  EItemContents,
-  EItemSummary,
-  ESearchResult,
-  EShopSummary,
+  type EAudioPreview,
+  type EItemContent,
+  type EItemContents,
+  type EItemSummary,
+  type ESearchResult,
+  type EShopSummary,
 } from '@/types/extracted';
 
 export class HtmlExtractor {

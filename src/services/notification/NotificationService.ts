@@ -1,4 +1,4 @@
-import { Notifications } from '@/types';
+import { type Notifications } from '@/types';
 import { JsonFetcher } from './fetchers';
 import { HTTPClient } from '..';
 import { JsonNormalizer } from './normalizers';

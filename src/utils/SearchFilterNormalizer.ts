@@ -1,5 +1,5 @@
-import { SearchFilter, AgeRestriction, ItemType, SortOrder } from '@/types';
-import { NSearchFilter } from '@/types/normalized';
+import { type SearchFilter, AgeRestriction, ItemType, SortOrder } from '@/types';
+import { type NSearchFilter } from '@/types/normalized';
 
 class SearchFilterNormalizer {
   static normalize(query: string, filter: SearchFilter): NSearchFilter {

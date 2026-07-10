@@ -1,4 +1,4 @@
-import { Item, ItemWithContents, SearchFilter, SearchResult } from '@/types';
+import { type Item, type ItemWithContents, type SearchFilter, type SearchResult } from '@/types';
 import { SearchFilterNormalizer } from '@/utils';
 import { HtmlFetcher, JsonFetcher } from './fetchers';
 import { HTTPClient } from '..';

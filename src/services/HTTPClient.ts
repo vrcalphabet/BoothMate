@@ -1,5 +1,5 @@
 import { AuthError } from '@/types';
-import { EndpointUrlSpec } from '@/types/internal';
+import { type EndpointUrlSpec } from '@/types/internal';
 import axios, { AxiosError } from 'axios';
 import chalk from 'chalk';
 

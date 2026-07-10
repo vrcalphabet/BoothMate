@@ -1,4 +1,4 @@
-import { ItemList, Shop, ShopItems } from '@/types';
+import { type ItemList, type Shop, type ShopItems } from '@/types';
 import { HTTPClient } from '..';
 import { HtmlFetcher } from './fetchers';
 import { HtmlExtractor } from './extractors';

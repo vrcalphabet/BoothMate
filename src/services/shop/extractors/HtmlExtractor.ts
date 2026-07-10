@@ -1,12 +1,12 @@
 import { cheerio } from '@/services';
-import { BItemSummary } from '@/types/booth-api';
+import { type BItemSummary } from '@/types/booth-api';
 import {
-  EItemList,
-  EItemListSummary,
-  EItemSummary,
-  ELink,
-  EShop,
-  EShopItems,
+  type EItemList,
+  type EItemListSummary,
+  type EItemSummary,
+  type ELink,
+  type EShop,
+  type EShopItems,
 } from '@/types/extracted';
 
 export class HtmlExtractor {

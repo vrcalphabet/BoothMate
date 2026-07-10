@@ -1,4 +1,4 @@
-import { EndpointUrlSpec } from '@/types/internal';
+import { type EndpointUrlSpec } from '@/types/internal';
 import { Validator } from '@/utils';
 
 export class JsonEndpointGenerator {

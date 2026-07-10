@@ -1,7 +1,7 @@
 import { AgeRestriction, ItemType, SortOrder } from '@/types';
 import { Validator } from '@/utils';
-import { NSearchFilter } from '@/types/normalized';
-import { EndpointUrlSpec } from '@/types/internal';
+import { type NSearchFilter } from '@/types/normalized';
+import { type EndpointUrlSpec } from '@/types/internal';
 
 export class HtmlEndpointGenerator {
   protected static baseUrl: string = 'https://booth.pm';

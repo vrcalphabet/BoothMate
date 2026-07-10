@@ -1,5 +1,5 @@
-import { Notification, Notifications } from '@/types';
-import { BNotification, BNotifications } from '@/types/booth-api';
+import { type Notification, type Notifications } from '@/types';
+import { type BNotification, type BNotifications } from '@/types/booth-api';
 
 export class JsonNormalizer {
   private constructor() {}

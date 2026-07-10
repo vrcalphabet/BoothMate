@@ -1,6 +1,6 @@
 import { HTTPClient } from '@/services';
 import { EndpointGenerator } from '@/api';
-import { NSearchFilter } from '@/types/normalized';
+import { type NSearchFilter } from '@/types/normalized';
 
 export class HtmlFetcher {
   private client: HTTPClient;

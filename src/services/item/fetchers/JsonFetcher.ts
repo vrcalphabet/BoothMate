@@ -1,6 +1,6 @@
 import { HTTPClient } from '@/services';
 import { EndpointGenerator } from '@/api';
-import { BItem } from '@/types/booth-api';
+import { type BItem } from '@/types/booth-api';
 
 export class JsonFetcher {
   private client: HTTPClient;

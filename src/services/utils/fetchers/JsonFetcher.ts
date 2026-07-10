@@ -1,6 +1,6 @@
 import { HTTPClient } from '@/services';
 import { EndpointGenerator } from '@/api';
-import { WebAppManifest } from 'web-app-manifest';
+import { type WebAppManifest } from 'web-app-manifest';
 import { AuthError } from '@/types';
 
 export class JsonFetcher {

@@ -1,7 +1,7 @@
 import { CategoryConverter } from '@/utils';
-import { BoothEvent, ImageInfo, ItemSummary, ShopSummary, SubCategory } from '@/types';
-import { BWishlistCounts } from '@/types/booth-api';
-import { EItemSummary, EShopSummary } from '@/types/extracted';
+import { BoothEvent, type ImageInfo, type ItemSummary, type ShopSummary, SubCategory } from '@/types';
+import { type BWishlistCounts } from '@/types/booth-api';
+import { type EItemSummary, type EShopSummary } from '@/types/extracted';
 
 export class CommonHtmlNormalizer {
   private constructor() {}

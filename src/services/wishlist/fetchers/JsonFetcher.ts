@@ -1,10 +1,10 @@
 import { HTTPClient } from '@/services';
 import { EndpointGenerator } from '@/api';
 import {
-  BItemInWishlist,
-  BWishlist,
-  BWishlistName,
-  BWishlistMetadata,
+  type BItemInWishlist,
+  type BWishlist,
+  type BWishlistName,
+  type BWishlistMetadata,
 } from '@/types/booth-api';
 import { AuthError } from '@/types';
 

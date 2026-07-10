@@ -1,8 +1,8 @@
 import { CommonHtmlNormalizer } from '@/services/common';
 import { LinkClassifier } from '@/utils';
-import { BoothEvent, Item, ItemContent, ItemWithContents, SearchResult } from '@/types';
-import { BWishlistCounts } from '@/types/booth-api';
-import { EItemContent, EItemContents, ESearchResult } from '@/types/extracted';
+import { BoothEvent, type Item, type ItemContent, type ItemWithContents, type SearchResult } from '@/types';
+import { type BWishlistCounts } from '@/types/booth-api';
+import { type EItemContent, type EItemContents, type ESearchResult } from '@/types/extracted';
 
 export class HtmlNormalizer {
   private constructor() {}

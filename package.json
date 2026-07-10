@@ -2,8 +2,8 @@
   "name": "boothmate",
   "version": "0.4.0",
   "description": "Booth用の非公式スクレイピングライブラリ",
-  "main": "dist/BoothMate.js",
-  "types": "dist/BoothMate.d.ts",
+  "main": "dist/main.js",
+  "types": "dist/main.d.ts",
   "files": [
     "dist",
     "README.md"
@@ -48,6 +48,7 @@
     "prettier": "^3.6.2",
     "ts-jest": "^29.4.1",
     "tsc-alias": "^1.8.16",
+    "tsdown": "^0.22.4",
     "typedoc": "^0.28.12",
     "typescript": "^5.8.3"
   }
