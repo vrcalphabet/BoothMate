@@ -1,7 +1,7 @@
 import {
-  BoothMate,
   AgeRestriction,
   BoothEvent,
+  BoothMate,
   Category,
   Item,
   ItemSummary,
@@ -9,20 +9,20 @@ import {
   ItemWithContents,
   SearchResult,
   SortOrder,
-} from 'boothmate';
+} from 'boothmate'
 
-const client = new BoothMate();
+const client = new BoothMate()
 
 // すべてのサンプルにおいて，変数の型は省略可能です。必要に応じて指定してください。
 
-(async () => {
+;(async () => {
   // 商品の一覧取得(デフォルト人気順)
-  let searchResult: SearchResult;
-  searchResult = await client.item.search();
+  let searchResult: SearchResult
+  searchResult = await client.item.search()
 
   // 検索キーワードと並び替えを指定して商品一覧を取得(新着順)
-  searchResult = await client.item.search('vr', { sort: SortOrder.NEW });
-  searchResult = await client.item.search({ query: 'vr', sort: SortOrder.NEW });
+  searchResult = await client.item.search('vr', { sort: SortOrder.NEW })
+  searchResult = await client.item.search({ query: 'vr', sort: SortOrder.NEW })
 
   // すべてのフィルターを指定して商品一覧を取得
   searchResult = await client.item.search({
@@ -42,21 +42,21 @@ const client = new BoothMate();
     min_price: 100, // 最小価格 (100円)
     max_price: 5500, // 最大価格 (5500円)
     sort: SortOrder.LIKES, // 並び替え (スキ！順)
-  });
+  })
 
   // 商品一覧の1番目の商品を取得
-  searchResult = await client.item.search();
-  const firstItem: ItemSummary = searchResult.items[0];
+  searchResult = await client.item.search()
+  const firstItem: ItemSummary = searchResult.items[0]
 
   // 商品が存在するか確認
-  const existsItem: boolean = await client.item.exists(firstItem.id);
+  const existsItem: boolean = await client.item.exists(firstItem.id)
 
   // 商品の詳細情報を取得(イベントや段落の内容は含まれません)
-  const itemDetail: Item | undefined = await client.item.get(firstItem.id);
+  const itemDetail: Item | undefined = await client.item.get(firstItem.id)
 
   // イベントや段落の内容を含む，詳細な商品情報を取得
   const itemFullDetail: ItemWithContents | undefined = await client.item.get(
     firstItem.id,
     true,
-  );
-})();
+  )
+})()

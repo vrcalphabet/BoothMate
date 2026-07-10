@@ -3,7 +3,7 @@
     // File Layout
     "rootDir": "src",
     "outDir": "dist",
-    
+
     // Environment Settings
     "module": "preserve",
     "target": "esnext",
@@ -27,10 +27,10 @@
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
-    
+
     "paths": {
       "@/*": ["./src/*"]
-    },
+    }
   },
-  "include": ["src"],
+  "include": ["src"]
 }

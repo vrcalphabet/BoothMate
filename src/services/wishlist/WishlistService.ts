@@ -1,10 +1,10 @@
 import { type Wishlist, type WishlistBasic, type WishlistSummary } from '@/types'
 import { type BItemInWishlist } from '@/types/internal/booth-api'
+import { isEqual } from '@/utils'
 import { HTTPClient } from '../common/HTTPClient'
 import { CommonJsonFetcher } from '../common/fetchers/CommonJsonFetcher'
 import { JsonFetcher } from './fetchers/JsonFetcher'
 import { JsonNormalizer } from './normalizers/JsonNormalizer'
-import { isEqual } from '@/utils'
 
 export class WishlistService {
   private jsonFetcher: JsonFetcher

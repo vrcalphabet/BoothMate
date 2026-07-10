@@ -9,7 +9,7 @@
     "README.md"
   ],
   "scripts": {
-    "format": "prettier --write \"{src,tests}/**/*.ts\"",
+    "format": "prettier --write \"{src,tests,examples}/**/*.ts\"",
     "build": "tsdown",
     "docs": "npx typedoc",
     "test": "jest",

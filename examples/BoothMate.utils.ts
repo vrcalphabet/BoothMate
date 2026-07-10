@@ -1,39 +1,39 @@
-import { BoothMate } from 'boothmate';
-import 'dotenv/config';
+import { BoothMate } from 'boothmate'
+import 'dotenv/config'
 
 const client = new BoothMate({
   sessionToken: process.env.SESSION_TOKEN!,
-});
+})
 
 // すべてのサンプルにおいて，変数の型は省略可能です。必要に応じて指定してください。
 
-(async () => {
+;(async () => {
   // セッショントークンの有効性を検証
-  const isValidToken: boolean = await client.utils.validateToken();
+  const isValidToken: boolean = await client.utils.validateToken()
 
   // 検索クエリの候補を取得
-  const suggestions: string[] = await client.utils.autocomplete('vr');
+  const suggestions: string[] = await client.utils.autocomplete('vr')
 
   // URLから商品IDを抽出
   const itemId: number | undefined = client.utils.extractItemId(
     'https://booth.pm/ja/items/5813187',
-  ); // → 5813187
+  ) // → 5813187
 
   // URLからショップサブドメインを抽出
   const shopSubdomain: string | undefined = client.utils.extractSubdomain(
     'https://mukumi.booth.pm/items/5813187',
-  ); // → 'mukumi'
+  ) // → 'mukumi'
 
   // URLからウィッシュリストIDを抽出
   const wishlistId: string | undefined = client.utils.extractWishlistId(
     'https://booth.pm/wish_list_names/pQ9TlbPV',
-  ); // → 'pQ9TlbPV'
+  ) // → 'pQ9TlbPV'
 
   // URLからサブドメインと商品リストIDを抽出
   const itemList: [string, string] | undefined = client.utils.extractItemListId(
     'https://mukumi.booth.pm/item_lists/8OVTLANn',
-  ); // → ['mukumi', '8OVTLANn']
+  ) // → ['mukumi', '8OVTLANn']
 
   // バイト数から人間に読みやすい形式に変換
-  const readableSize: string = client.utils.formatFileSize(123456789); // → '117.74 MB'
-})();
+  const readableSize: string = client.utils.formatFileSize(123456789) // → '117.74 MB'
+})()
