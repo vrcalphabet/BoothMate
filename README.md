@@ -11,12 +11,12 @@ TypeScriptで書かれたBooth用の非公式スクレイピングライブラ�
 ### インポート・初期化
 
 ```typescript
-import { BoothMate } from 'boothmate';
+import { BoothMate } from 'boothmate'
 
 const client = new BoothMate({
   sessionToken: 'your_session_token',
-  csrfToken: 'your_csrf_token'
-});
+  csrfToken: 'your_csrf_token',
+})
 
 // もしくはトークンを省略して初期化も可能です
 // const client = new BoothMate();
@@ -32,45 +32,45 @@ const searchResult = await client.item.search('VRChat', {
   category: Category.THREE_D_MODEL,
   min_price: 0,
   max_price: 5000,
-});
+})
 
-console.log(`検索結果: ${searchResult.total_items}件`);
+console.log(`検索結果: ${searchResult.total_items}件`)
 searchResult.items.forEach((item) => {
-  console.log(`- ${item.name}: ¥${item.min_price}`);
-});
+  console.log(`- ${item.name}: ¥${item.min_price}`)
+})
 
 // 特定の商品の詳細を取得
-const item = await client.item.get(123456);
-console.log(item.description);
+const item = await client.item.get(123456)
+console.log(item.description)
 ```
 
 ### ショップ情報取得
 
 ```typescript
 // ショップ情報の取得
-const shop = await client.shop.get('vrcalphabet');
-console.log(`ショップ名: ${shop.name}`);
+const shop = await client.shop.get('vrcalphabet')
+console.log(`ショップ名: ${shop.name}`)
 
 // ショップの商品一覧の取得
-const shopItems = await client.shop.getItems('vrcalphabet');
+const shopItems = await client.shop.getItems('vrcalphabet')
 ```
 
 ### ウィッシュリスト操作
 
 ```typescript
 // 作成したウィッシュリスト一覧取得
-const wishlists = await client.wishlist.getNames();
-console.log(`ウィッシュリスト数: ${wishlists.length}`);
+const wishlists = await client.wishlist.getNames()
+console.log(`ウィッシュリスト数: ${wishlists.length}`)
 
 // ウィッシュリスト内の商品一覧を取得
-const wishlistItems = await client.wishlist.getItems('pQ9TlbPV');
-console.log(`アイテム数: ${wishlistItems.total_items}`);
+const wishlistItems = await client.wishlist.getItems('pQ9TlbPV')
+console.log(`アイテム数: ${wishlistItems.total_items}`)
 
 // 商品をウィッシュリストに追加
-await client.wishlist.addItem('pQ9TlbPV', 123456);
+await client.wishlist.addItem('pQ9TlbPV', 123456)
 
 // ウィッシュリストから商品を削除
-await client.wishlist.removeItem('pQ9TlbPV', 123456);
+await client.wishlist.removeItem('pQ9TlbPV', 123456)
 ```
 
 ここで紹介したAPIは，ほんの一部にしかすぎません。API一覧は，[ドキュメンテーション](https://vrcalphabet.github.io/BoothMate/classes/BoothMate.BoothMate.html)や[サンプル](https://github.com/vrcalphabet/BoothMate/tree/master/examples)をご覧ください。
@@ -79,21 +79,11 @@ await client.wishlist.removeItem('pQ9TlbPV', 123456);
 
 ## インストール
 
-### npm
-
 ```bash
 npm install boothmate
-```
-
-### yarn
-
-```bash
+# or
 yarn add boothmate
-```
-
-### pnpm
-
-```bash
+# or
 pnpm add boothmate
 ```
 
@@ -105,15 +95,14 @@ pnpm add boothmate
    - [Booth](https://booth.pm/ja)にログイン後、[Cookie-Editor](https://chromewebstore.google.com/detail/cookie-editor/hlkenndednhfkekhgcdicdfddnkalmdm)などのCookie閲覧ツールを使用して値を取得
 
 2. **CSRFトークン**:
-   - ページのHTMLから`<meta name="csrf-token" content="...">`を探して`content`の値を取得
-   - または、`document.querySelector('meta[name="csrf-token"]').content`を実行して取得
+   - 開発者ツールのコンソールで、`document.querySelector('meta[name="csrf-token"]').content`を実行して取得
 
 ### デバッグモード
 
 デバッグモードを有効にするには，オプションの`debug`に`true`を指定します。
 
 ```typescript
-const client = new BoothMate({ debug: true }); // デバッグモード有効
+const client = new BoothMate({ debug: true }) // デバッグモード有効
 ```
 
 デバッグモードを有効にすると、HTTPリクエストの詳細がコンソールに出力されます(例)。
@@ -160,6 +149,13 @@ MIT License
 
 - トークンを省略して初期化できるようにした
 
+### v0.5.0 (2026-07-10)
+
+- [OR条件での検索](https://booth.pm/announcements/939)をできるようにした
+- [サブカテゴリを追加](https://booth.pm/announcements/935)した
+- イベントをたくさん追加した
+- Webマニフェストを取得するAPIを削除した
+
 ## 短期目標
 
 - より詳細なエラーハンドリング
@@ -181,4 +177,5 @@ MIT License
 
 ---
 
-**注意**: このライブラリは非公式です。Booth.pmの利用規約([サービス共通利用規約](https://policies.pixiv.net/#terms), [Booth利用規約](https://policies.pixiv.net/#booth))を遵守してご利用ください。また，各APIは1秒以上ごとに実行するなどしてBoothのサーバに負荷が掛からないように配慮してください。
+**注意**: このライブラリは非公式です。Booth.pmの利用規約([サービス共通利用規約](https://policies.pixiv.net/#terms), [Booth利用規約](https://policies.pixiv.net/#booth))を遵守してご利用ください。また，各APIは1秒以上ごとに実行するなどしてBoothのサーバに負荷が掛からないように配慮してください。\
+https://booth.pm/announcements/863
