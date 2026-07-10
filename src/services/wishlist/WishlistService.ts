@@ -1,18 +1,18 @@
-import { isEqual } from 'lodash';
-import { JsonFetcher } from './fetchers';
-import { JsonNormalizer } from './normalizers';
-import { type Wishlist, type WishlistBasic, type WishlistSummary } from '@/types';
-import { HTTPClient } from '..';
-import { type BItemInWishlist } from '@/types/booth-api';
-import { CommonJsonFetcher } from '../common';
+import { type Wishlist, type WishlistBasic, type WishlistSummary } from '@/types'
+import { type BItemInWishlist } from '@/types/internal/booth-api'
+import { HTTPClient } from '../common/HTTPClient'
+import { CommonJsonFetcher } from '../common/fetchers/CommonJsonFetcher'
+import { JsonFetcher } from './fetchers/JsonFetcher'
+import { JsonNormalizer } from './normalizers/JsonNormalizer'
+import { isEqual } from '@/utils'
 
 export class WishlistService {
-  private jsonFetcher: JsonFetcher;
-  private commonJsonFetcher: CommonJsonFetcher;
+  private jsonFetcher: JsonFetcher
+  private commonJsonFetcher: CommonJsonFetcher
 
   constructor(client: HTTPClient) {
-    this.jsonFetcher = new JsonFetcher(client);
-    this.commonJsonFetcher = new CommonJsonFetcher(client);
+    this.jsonFetcher = new JsonFetcher(client)
+    this.commonJsonFetcher = new CommonJsonFetcher(client)
   }
 
   /**
@@ -37,8 +37,8 @@ export class WishlistService {
    * ```
    */
   async getNames(): Promise<WishlistSummary[]> {
-    const wishlistNames = await this.jsonFetcher.getNames();
-    return JsonNormalizer.getNames(wishlistNames);
+    const wishlistNames = await this.jsonFetcher.getNames()
+    return JsonNormalizer.getNames(wishlistNames)
   }
 
   /**
@@ -65,17 +65,20 @@ export class WishlistService {
    * }
    * ```
    */
-  async getItems(wishlistId: string, page: number = 1): Promise<Wishlist | undefined> {
-    const wishlistName = await this.jsonFetcher.getMetadata(wishlistId);
-    if (!wishlistName) return undefined;
+  async getItems(
+    wishlistId: string,
+    page: number = 1,
+  ): Promise<Wishlist | undefined> {
+    const wishlistName = await this.jsonFetcher.getMetadata(wishlistId)
+    if (!wishlistName) return undefined
 
-    const wishlist = await this.jsonFetcher.getItems(wishlistId, page);
-    if (!wishlist) return undefined;
+    const wishlist = await this.jsonFetcher.getItems(wishlistId, page)
+    if (!wishlist) return undefined
 
     const wishlistCounts =
-      await this.commonJsonFetcher.wishlistCountsFromResult(wishlist);
+      await this.commonJsonFetcher.wishlistCountsFromResult(wishlist)
 
-    return JsonNormalizer.getItems(wishlist, wishlistName, wishlistCounts);
+    return JsonNormalizer.getItems(wishlist, wishlistName, wishlistCounts)
   }
 
   /**
@@ -101,11 +104,11 @@ export class WishlistService {
    * ```
    */
   async getDefaultItems(page: number = 1): Promise<WishlistBasic> {
-    const wishlist = await this.jsonFetcher.getDefaultItems(page);
+    const wishlist = await this.jsonFetcher.getDefaultItems(page)
     const wishlistCounts =
-      await this.commonJsonFetcher.wishlistCountsFromResult(wishlist);
+      await this.commonJsonFetcher.wishlistCountsFromResult(wishlist)
 
-    return JsonNormalizer.getBasic(wishlist, wishlistCounts);
+    return JsonNormalizer.getBasic(wishlist, wishlistCounts)
   }
 
   /**
@@ -129,11 +132,11 @@ export class WishlistService {
    * ```
    */
   async getUncategorizedItems(page: number = 1): Promise<WishlistBasic> {
-    const wishlist = await this.jsonFetcher.getUncategorizedItems(page);
+    const wishlist = await this.jsonFetcher.getUncategorizedItems(page)
     const wishlistCounts =
-      await this.commonJsonFetcher.wishlistCountsFromResult(wishlist);
+      await this.commonJsonFetcher.wishlistCountsFromResult(wishlist)
 
-    return JsonNormalizer.getBasic(wishlist, wishlistCounts);
+    return JsonNormalizer.getBasic(wishlist, wishlistCounts)
   }
 
   /**
@@ -167,15 +170,15 @@ export class WishlistService {
    */
   async hasItem(itemId: number, wishlistId?: string): Promise<boolean> {
     if (wishlistId === undefined) {
-      const wishlistCounts = await this.commonJsonFetcher.wishlistCounts([itemId]);
-      return wishlistCounts.item_ids.includes(itemId);
+      const wishlistCounts = await this.commonJsonFetcher.wishlistCounts([itemId])
+      return wishlistCounts.item_ids.includes(itemId)
     } else {
-      const isItemInWishlist = await this.jsonFetcher.hasItem(itemId);
+      const isItemInWishlist = await this.jsonFetcher.hasItem(itemId)
       return isItemInWishlist.some(
         (wishlist) =>
           wishlist.wish_list_name_code === wishlistId &&
           wishlist.is_item_in_wish_list_name,
-      );
+      )
     }
   }
 
@@ -209,23 +212,27 @@ export class WishlistService {
    * ```
    */
   async addItem(itemId: number, wishlistIds?: string | string[]): Promise<void> {
-    const wishlistStatus = await this.jsonFetcher.hasItem(itemId);
+    const wishlistStatus = await this.jsonFetcher.hasItem(itemId)
 
-    const currentWishlistIds = this.determineTargetWishlistIds(wishlistStatus, [], true);
+    const currentWishlistIds = this.determineTargetWishlistIds(
+      wishlistStatus,
+      [],
+      true,
+    )
     const targetWishlistIds = this.determineTargetWishlistIds(
       wishlistStatus,
       wishlistIds ?? [],
-    );
+    )
     if (isEqual(currentWishlistIds, targetWishlistIds)) {
-      return;
+      return
     }
 
     if (wishlistIds === undefined || currentWishlistIds.length === 0) {
-      const addSuccess = await this.jsonFetcher.post(itemId);
-      if (!addSuccess || wishlistIds === undefined) return;
+      const addSuccess = await this.jsonFetcher.post(itemId)
+      if (!addSuccess || wishlistIds === undefined) return
     }
 
-    await this.jsonFetcher.patch(itemId, targetWishlistIds);
+    await this.jsonFetcher.patch(itemId, targetWishlistIds)
   }
 
   /**
@@ -259,23 +266,27 @@ export class WishlistService {
    */
   async removeItem(itemId: number, wishlistIds?: string | string[]): Promise<void> {
     if (wishlistIds === undefined) {
-      await this.jsonFetcher.delete(itemId);
-      return;
+      await this.jsonFetcher.delete(itemId)
+      return
     }
 
-    const wishlistStatus = await this.jsonFetcher.hasItem(itemId);
+    const wishlistStatus = await this.jsonFetcher.hasItem(itemId)
 
-    const currentWishlistIds = this.determineTargetWishlistIds(wishlistStatus, [], true);
+    const currentWishlistIds = this.determineTargetWishlistIds(
+      wishlistStatus,
+      [],
+      true,
+    )
     const targetWishlistIds = this.determineTargetWishlistIds(
       wishlistStatus,
       wishlistIds,
       true,
-    );
+    )
     if (isEqual(currentWishlistIds, targetWishlistIds)) {
-      return;
+      return
     }
 
-    await this.jsonFetcher.patch(itemId, targetWishlistIds);
+    await this.jsonFetcher.patch(itemId, targetWishlistIds)
   }
 
   private determineTargetWishlistIds(
@@ -283,21 +294,22 @@ export class WishlistService {
     requestedIds: string | string[],
     remove: boolean = false,
   ): string[] {
-    const requestedIdsArray = Array.isArray(requestedIds) ? requestedIds : [requestedIds];
+    const requestedIdsArray =
+      Array.isArray(requestedIds) ? requestedIds : [requestedIds]
     return currentStatus
       .filter((wishlist) => {
         if (remove) {
           return (
             wishlist.is_item_in_wish_list_name &&
             !requestedIdsArray.includes(wishlist.wish_list_name_code)
-          );
+          )
         } else {
           return (
             wishlist.is_item_in_wish_list_name ||
             requestedIdsArray.includes(wishlist.wish_list_name_code)
-          );
+          )
         }
       })
-      .map((wishlist) => wishlist.wish_list_name_code);
+      .map((wishlist) => wishlist.wish_list_name_code)
   }
 }

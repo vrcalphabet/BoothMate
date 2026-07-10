@@ -1,21 +1,21 @@
-import { HTTPClient } from '@/services';
-import { EndpointGenerator } from '@/api';
+import { HtmlEndpointGenerator } from '@/api/HtmlEndpointGenerator'
+import { HTTPClient } from '@/services/common/HTTPClient'
 
 export class HtmlFetcher {
-  private client: HTTPClient;
+  private client: HTTPClient
 
   constructor(client: HTTPClient) {
-    this.client = client;
+    this.client = client
   }
 
   async getItems(subdomain: string, page: number): Promise<string | undefined> {
-    const shopUrl = EndpointGenerator.html.getShopItems(subdomain, page);
-    if (!shopUrl) return undefined;
+    const shopUrl = HtmlEndpointGenerator.getShopItems(subdomain, page)
+    if (!shopUrl) return undefined
 
     try {
-      return await this.client.getHtml(shopUrl);
+      return await this.client.getHtml(shopUrl)
     } catch {
-      return undefined;
+      return undefined
     }
   }
 
@@ -24,17 +24,17 @@ export class HtmlFetcher {
     itemListId: string,
     page: number,
   ): Promise<string | undefined> {
-    const itemListUrl = EndpointGenerator.html.getShopItemListItems(
+    const itemListUrl = HtmlEndpointGenerator.getShopItemListItems(
       subdomain,
       itemListId,
       page,
-    );
-    if (!itemListUrl) return undefined;
+    )
+    if (!itemListUrl) return undefined
 
     try {
-      return await this.client.getHtml(itemListUrl);
+      return await this.client.getHtml(itemListUrl)
     } catch {
-      return undefined;
+      return undefined
     }
   }
 }

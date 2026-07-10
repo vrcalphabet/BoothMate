@@ -1,6 +1,5 @@
 import { BoothMate } from 'boothmate';
 import 'dotenv/config';
-import { WebAppManifest } from 'web-app-manifest';
 
 const client = new BoothMate({
   sessionToken: process.env.SESSION_TOKEN!,
@@ -9,9 +8,6 @@ const client = new BoothMate({
 // すべてのサンプルにおいて，変数の型は省略可能です。必要に応じて指定してください。
 
 (async () => {
-  // Webアプリマニフェストを取得
-  const manifest: WebAppManifest = await client.utils.getManifest();
-
   // セッショントークンの有効性を検証
   const isValidToken: boolean = await client.utils.validateToken();
 

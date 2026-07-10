@@ -1,22 +1,23 @@
-import { CommonHtmlNormalizer, CommonJsonNormalizer } from '@/services/common';
-import { CategoryConverter } from '@/utils';
+import { CommonHtmlNormalizer } from '@/services/common/normalizers/CommonHtmlNormalizer'
+import { CommonJsonNormalizer } from '@/services/common/normalizers/CommonJsonNormalizer'
 import {
   BoothEvent,
   type ItemSummary,
   type Wishlist,
   type WishlistBasic,
   type WishlistSummary,
-} from '@/types';
+} from '@/types'
 import {
   type BItemSummary,
   type BWishlist,
   type BWishlistCounts,
   type BWishlistMetadata,
   type BWishlistName,
-} from '@/types/booth-api';
+} from '@/types/internal/booth-api'
+import { CategoryConverter } from '@/utils/CategoryConverter'
 
 export class JsonNormalizer {
-  static WISHLIST_ITEM_LIMIT = 2000;
+  static WISHLIST_ITEM_LIMIT = 2000
 
   private constructor() {}
 
@@ -26,7 +27,7 @@ export class JsonNormalizer {
       name: wishlist.name,
       url: `https://accounts.booth.pm/wish_lists/${wishlist.code}`,
       public_url: `https://booth.pm/wish_list_names/${wishlist.code}`,
-    }));
+    }))
   }
 
   static getItems(
@@ -46,16 +47,19 @@ export class JsonNormalizer {
       visible: wishlistNameDetail.visible,
       description: wishlistNameDetail.description,
       items: this.get_items(wishlist.items, wishlistCounts),
-    };
+    }
   }
 
-  static getBasic(wishlist: BWishlist, wishlistCounts: BWishlistCounts): WishlistBasic {
+  static getBasic(
+    wishlist: BWishlist,
+    wishlistCounts: BWishlistCounts,
+  ): WishlistBasic {
     return {
       current_page: wishlist.pagination.current_page,
       total_pages: wishlist.pagination.total_pages,
       total_items: wishlist.pagination.total_count,
       items: this.get_items(wishlist.items, wishlistCounts),
-    };
+    }
   }
 
   private static get_items(
@@ -90,7 +94,7 @@ export class JsonNormalizer {
         is_discontinued: item.is_end_of_sale,
         preview: CommonJsonNormalizer.itemPreview(item.music),
         shop: CommonJsonNormalizer.itemShop(item.shop),
-      };
-    });
+      }
+    })
   }
 }

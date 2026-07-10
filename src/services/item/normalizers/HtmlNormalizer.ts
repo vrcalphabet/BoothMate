@@ -1,8 +1,18 @@
-import { CommonHtmlNormalizer } from '@/services/common';
-import { LinkClassifier } from '@/utils';
-import { BoothEvent, type Item, type ItemContent, type ItemWithContents, type SearchResult } from '@/types';
-import { type BWishlistCounts } from '@/types/booth-api';
-import { type EItemContent, type EItemContents, type ESearchResult } from '@/types/extracted';
+import { CommonHtmlNormalizer } from '@/services/common/normalizers/CommonHtmlNormalizer'
+import {
+  BoothEvent,
+  type Item,
+  type ItemContent,
+  type ItemWithContents,
+  type SearchResult,
+} from '@/types'
+import { type BWishlistCounts } from '@/types/internal/booth-api'
+import {
+  type EItemContent,
+  type EItemContents,
+  type ESearchResult,
+} from '@/types/internal/extracted'
+import { LinkClassifier } from '@/utils/LinkClassifier'
 
 export class HtmlNormalizer {
   private constructor() {}
@@ -11,14 +21,14 @@ export class HtmlNormalizer {
     searchResult: ESearchResult,
     wishlistCounts: BWishlistCounts,
   ): SearchResult {
-    const total = Number(searchResult.total_items.match(/\d+/)![0]);
+    const total = Number(searchResult.total_items.match(/\d+/)![0])
 
     return {
       total_items: total,
       current_page: Number(searchResult.current_page),
       total_pages: Math.ceil(total / 60),
       items: CommonHtmlNormalizer.items(searchResult.items, wishlistCounts),
-    };
+    }
   }
 
   static get(item: Item, contents: EItemContents): ItemWithContents {
@@ -32,7 +42,7 @@ export class HtmlNormalizer {
           }
         : undefined,
       contents: this.get_contents(contents.contents),
-    };
+    }
   }
 
   private static get_contents(contents: EItemContent[]): ItemContent[] {
@@ -42,13 +52,13 @@ export class HtmlNormalizer {
           is_paragraph: true,
           title: content.title,
           text: content.text,
-        };
+        }
       } else {
         return {
           is_paragraph: false,
           embed: LinkClassifier.classifyEmbed(content.text),
-        };
+        }
       }
-    });
+    })
   }
 }

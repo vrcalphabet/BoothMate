@@ -1,31 +1,12 @@
-import { type WebAppManifest } from 'web-app-manifest';
-import { JsonFetcher } from './fetchers';
-import { HTTPClient } from '..';
-import { FileSizeConverter } from '@/utils';
+import { FileSizeConverter } from '@/utils/FileSizeConverter'
+import { HTTPClient } from '../common/HTTPClient'
+import { JsonFetcher } from './fetchers/JsonFetcher'
 
 export class UtilsService {
-  private jsonFetcher: JsonFetcher;
+  private jsonFetcher: JsonFetcher
 
   constructor(client: HTTPClient) {
-    this.jsonFetcher = new JsonFetcher(client);
-  }
-
-  /**
-   * Webアプリマニフェストを取得します。
-   *
-   * BoothのWebアプリマニフェスト(manifest.json) の内容を取得します。
-   *
-   * @returns Webアプリマニフェストの内容
-   *
-   * @example
-   * ```ts
-   * // アプリの名前を出力
-   * const manifest = await client.utils.getManifest();
-   * console.log(manifest.name);
-   * ```
-   */
-  getManifest(): Promise<WebAppManifest> {
-    return this.jsonFetcher.getManifest();
+    this.jsonFetcher = new JsonFetcher(client)
   }
 
   /**
@@ -49,7 +30,7 @@ export class UtilsService {
    * ```
    */
   async validateToken(): Promise<boolean> {
-    return await this.jsonFetcher.validateToken();
+    return await this.jsonFetcher.validateToken()
   }
 
   /**
@@ -71,7 +52,7 @@ export class UtilsService {
    * ```
    */
   autocomplete(query: string): Promise<string[]> {
-    return this.jsonFetcher.autocomplete(query);
+    return this.jsonFetcher.autocomplete(query)
   }
 
   /**
@@ -99,16 +80,16 @@ export class UtilsService {
     const urlPatterns = [
       /^https:\/\/booth\.pm\/[a-z-]+\/items\/(\d+)(?=$|[/?#])/,
       /^https:\/\/[a-z0-9-]+\.booth\.pm\/items\/(\d+)(?=$|[/?#])/i,
-    ];
+    ]
 
     for (const pattern of urlPatterns) {
-      const match = url.match(pattern);
+      const match = url.match(pattern)
       if (match && match[1]) {
-        return Number(match[1]);
+        return Number(match[1])
       }
     }
 
-    return undefined;
+    return undefined
   }
 
   /**
@@ -132,14 +113,14 @@ export class UtilsService {
    * ```
    */
   extractSubdomain(url: string): string | undefined {
-    const urlPattern = /^https:\/\/([a-z0-9-]+)\.booth\.pm(?=$|[/?#:])/i;
+    const urlPattern = /^https:\/\/([a-z0-9-]+)\.booth\.pm(?=$|[/?#:])/i
 
-    const match = url.match(urlPattern);
+    const match = url.match(urlPattern)
     if (match && match[1]) {
-      return match[1];
+      return match[1]
     }
 
-    return undefined;
+    return undefined
   }
 
   /**
@@ -167,16 +148,16 @@ export class UtilsService {
     const urlPatterns = [
       /^https:\/\/accounts\.booth\.pm\/wish_lists\/([a-z0-9]{8})(?=$|[/?#])/i,
       /^https:\/\/booth\.pm\/wish_list_names\/([a-z0-9]{8})(?=$|[/?#])/i,
-    ];
+    ]
 
     for (const pattern of urlPatterns) {
-      const match = url.match(pattern);
+      const match = url.match(pattern)
       if (match && match[1]) {
-        return match[1];
+        return match[1]
       }
     }
 
-    return undefined;
+    return undefined
   }
 
   /**
@@ -201,16 +182,18 @@ export class UtilsService {
    * }
    * ```
    */
-  extractItemListId(url: string): [subdomain: string, itemListId: string] | undefined {
+  extractItemListId(
+    url: string,
+  ): [subdomain: string, itemListId: string] | undefined {
     const urlPattern =
-      /^https:\/\/([a-z0-9-]+)\.booth\.pm\/item_lists\/([a-z0-9]{8})(?=$|[/?#])/i;
+      /^https:\/\/([a-z0-9-]+)\.booth\.pm\/item_lists\/([a-z0-9]{8})(?=$|[/?#])/i
 
-    const match = url.match(urlPattern);
+    const match = url.match(urlPattern)
     if (match && match[1] && match[2]) {
-      return [match[1], match[2]];
+      return [match[1], match[2]]
     }
 
-    return undefined;
+    return undefined
   }
 
   /**
@@ -228,6 +211,6 @@ export class UtilsService {
    * ```
    */
   formatFileSize(fileBytes: number, decimalPlaces: number = 2): string {
-    return FileSizeConverter.fromBytes(fileBytes, decimalPlaces);
+    return FileSizeConverter.fromBytes(fileBytes, decimalPlaces)
   }
 }

@@ -1,20 +1,27 @@
-import { type Item, type ItemWithContents, type SearchFilter, type SearchResult } from '@/types';
-import { SearchFilterNormalizer } from '@/utils';
-import { HtmlFetcher, JsonFetcher } from './fetchers';
-import { HTTPClient } from '..';
-import { HtmlExtractor } from './extractors';
-import { HtmlNormalizer, JsonNormalizer } from './normalizers';
-import { CommonJsonFetcher } from '../common';
+import {
+  type Item,
+  type ItemWithContents,
+  type SearchFilter,
+  type SearchResult,
+} from '@/types'
+import { SearchFilterNormalizer } from '@/utils/SearchFilterNormalizer'
+import { HTTPClient } from '../common/HTTPClient'
+import { CommonJsonFetcher } from '../common/fetchers/CommonJsonFetcher'
+import { HtmlExtractor } from './extractors/HtmlExtractor'
+import { HtmlFetcher } from './fetchers/HtmlFetcher'
+import { JsonFetcher } from './fetchers/JsonFetcher'
+import { HtmlNormalizer } from './normalizers/HtmlNormalizer'
+import { JsonNormalizer } from './normalizers/JsonNormalizer'
 
 export class ItemService {
-  private htmlFetcher: HtmlFetcher;
-  private jsonFetcher: JsonFetcher;
-  private commonJsonFetcher: CommonJsonFetcher;
+  private htmlFetcher: HtmlFetcher
+  private jsonFetcher: JsonFetcher
+  private commonJsonFetcher: CommonJsonFetcher
 
   constructor(client: HTTPClient) {
-    this.htmlFetcher = new HtmlFetcher(client);
-    this.jsonFetcher = new JsonFetcher(client);
-    this.commonJsonFetcher = new CommonJsonFetcher(client);
+    this.htmlFetcher = new HtmlFetcher(client)
+    this.jsonFetcher = new JsonFetcher(client)
+    this.commonJsonFetcher = new CommonJsonFetcher(client)
   }
 
   /**
@@ -47,7 +54,7 @@ export class ItemService {
    * const firstItemId = result.items[0].id;
    * ```
    */
-  async search(query: string, filter?: SearchFilter): Promise<SearchResult>;
+  async search(query: string, filter?: SearchFilter): Promise<SearchResult>
   /**
    * 商品を検索します。
    *
@@ -77,7 +84,7 @@ export class ItemService {
    * const firstItemId = result.items[0].id;
    * ```
    */
-  async search(filter?: SearchFilter): Promise<SearchResult>;
+  async search(filter?: SearchFilter): Promise<SearchResult>
   async search(
     query_or_filter?: string | SearchFilter,
     filter?: SearchFilter,
@@ -85,16 +92,16 @@ export class ItemService {
     const nFilter =
       typeof query_or_filter === 'string' ?
         SearchFilterNormalizer.normalize(query_or_filter, filter ?? {})
-      : SearchFilterNormalizer.normalize('', query_or_filter ?? {});
+      : SearchFilterNormalizer.normalize('', query_or_filter ?? {})
 
-    const searchHtml = await this.htmlFetcher.search(nFilter);
+    const searchHtml = await this.htmlFetcher.search(nFilter)
 
-    const extractedSearch = HtmlExtractor.search(searchHtml, nFilter.page);
+    const extractedSearch = HtmlExtractor.search(searchHtml, nFilter.page)
     const wishlistCounts =
-      await this.commonJsonFetcher.wishlistCountsFromResult(extractedSearch);
-    const normalizedSearch = HtmlNormalizer.search(extractedSearch, wishlistCounts);
+      await this.commonJsonFetcher.wishlistCountsFromResult(extractedSearch)
+    const normalizedSearch = HtmlNormalizer.search(extractedSearch, wishlistCounts)
 
-    return normalizedSearch;
+    return normalizedSearch
   }
 
   /**
@@ -115,7 +122,7 @@ export class ItemService {
    * ```
    */
   exists(itemId: number): Promise<boolean> {
-    return this.jsonFetcher.exists(itemId);
+    return this.jsonFetcher.exists(itemId)
   }
 
   /**
@@ -150,27 +157,30 @@ export class ItemService {
    * }
    * ```
    */
-  async get(itemId: number, includeContents?: false): Promise<Item | undefined>;
+  async get(itemId: number, includeContents?: false): Promise<Item | undefined>
   async get(
     itemId: number,
     includeContents?: true,
-  ): Promise<ItemWithContents | undefined>;
+  ): Promise<ItemWithContents | undefined>
   async get(
     itemId: number,
     includeContents: boolean = false,
   ): Promise<Item | ItemWithContents | undefined> {
-    const item = await this.jsonFetcher.get(itemId);
-    if (!item) return undefined;
+    const item = await this.jsonFetcher.get(itemId)
+    if (!item) return undefined
 
-    const normalizedItem = JsonNormalizer.get(item);
-    if (!includeContents) return normalizedItem;
+    const normalizedItem = JsonNormalizer.get(item)
+    if (!includeContents) return normalizedItem
 
-    const itemHtml = await this.htmlFetcher.get(itemId);
-    if (!itemHtml) return undefined;
+    const itemHtml = await this.htmlFetcher.get(itemId)
+    if (!itemHtml) return undefined
 
-    const extractedItem = HtmlExtractor.get(itemHtml);
-    const normalizedItemWithContents = HtmlNormalizer.get(normalizedItem, extractedItem);
+    const extractedItem = HtmlExtractor.get(itemHtml)
+    const normalizedItemWithContents = HtmlNormalizer.get(
+      normalizedItem,
+      extractedItem,
+    )
 
-    return normalizedItemWithContents;
+    return normalizedItemWithContents
   }
 }

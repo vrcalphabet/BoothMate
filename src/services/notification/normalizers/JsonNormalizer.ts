@@ -1,26 +1,30 @@
-import { type Notification, type Notifications } from '@/types';
-import { type BNotification, type BNotifications } from '@/types/booth-api';
+import { type Notification, type Notifications } from '@/types'
+import { type BNotification, type BNotifications } from '@/types/internal/booth-api'
 
 export class JsonNormalizer {
   private constructor() {}
 
   static list(notifications: BNotifications): Notifications {
-    const notificationsList: Notification[] = [];
+    const notificationsList: Notification[] = []
 
     notifications.unread.forEach((notification) => {
-      notificationsList.push(this.normalize(notification, false));
-    });
+      notificationsList.push(this.normalize(notification, false))
+    })
 
     notifications.read.forEach((notification) => {
-      notificationsList.push(this.normalize(notification, true));
-    });
+      notificationsList.push(this.normalize(notification, true))
+    })
 
-    return notificationsList;
+    return notificationsList
   }
 
-  private static normalize(notification: BNotification, isRead: boolean): Notification {
-    const type = notification.activityType == 'message.create' ? 'message' : 'reaction';
-    const { from, name } = notification;
+  private static normalize(
+    notification: BNotification,
+    isRead: boolean,
+  ): Notification {
+    const type =
+      notification.activityType == 'message.create' ? 'message' : 'reaction'
+    const { from, name } = notification
 
     return {
       type: type,
@@ -33,6 +37,6 @@ export class JsonNormalizer {
         : `${name}${from === 'user' ? 'さん' : ''}がリアクションしました`,
       url: notification.url,
       isRead: isRead,
-    };
+    }
   }
 }

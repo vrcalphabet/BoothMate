@@ -1,5 +1,4 @@
-import { cheerio } from '@/services';
-import { type BItemSummary } from '@/types/booth-api';
+import { type BItemSummary } from '@/types/internal/booth-api'
 import {
   type EItemList,
   type EItemListSummary,
@@ -7,7 +6,8 @@ import {
   type ELink,
   type EShop,
   type EShopItems,
-} from '@/types/extracted';
+} from '@/types/internal/extracted'
+import * as cheerio from 'cheerio'
 
 export class HtmlExtractor {
   private constructor() {}
@@ -17,17 +17,17 @@ export class HtmlExtractor {
       e +
         '\n\nBoothのHTML構造が変化しています。お手数ですが，Issueを立ててください。' +
         '\nhttps://github.com/vrcalphabet/BoothMate/issues',
-    );
+    )
   }
 
   static get(rawHtml: string, subdomain: string): EShop {
     try {
-      const $ = cheerio.load(rawHtml);
-      const tagNameOfshopName = $('.display_title').prop('tagName');
+      const $ = cheerio.load(rawHtml)
+      const tagNameOfShopName = $('.display_title').prop('tagName')
       const name =
-        tagNameOfshopName === 'span' ?
+        tagNameOfShopName === 'span' ?
           $('.display_title').text()
-        : $('.display_title > img').attr('title')!;
+        : $('.display_title > img').attr('title')!
 
       return {
         url: `https://${subdomain}.booth.pm/`,
@@ -39,59 +39,59 @@ export class HtmlExtractor {
         description: $('.booth-description > .autolink > div').text(),
         links: this.get_links($),
         item_lists: this.get_itemLists($),
-      };
+      }
     } catch (e) {
-      this.printError(e);
+      this.printError(e)
     }
   }
 
   private static get_links($: cheerio.CheerioAPI): ELink[] {
-    const links: ELink[] = [];
+    const links: ELink[] = []
     $('.booth-description > .flex > a').each((_, element) => {
-      const el = $(element);
+      const el = $(element)
 
       links.push({
         url: el.attr('href')!,
         caption: el.attr('title') || undefined,
-      });
-    });
-    return links;
+      })
+    })
+    return links
   }
 
   private static get_itemLists($: cheerio.CheerioAPI): EItemListSummary[] {
     if ($('.item-list-nav').length === 0) {
-      return [];
+      return []
     }
 
-    const itemLists: EItemListSummary[] = [];
+    const itemLists: EItemListSummary[] = []
     $('.item-list-nav a').each((_, element) => {
       itemLists.push({
         url: $(element).attr('href')!,
         name: $(element).find('.item-list-tablet-label-inner').text(),
-      });
-    });
-    return itemLists;
+      })
+    })
+    return itemLists
   }
 
   static getItems(rawHtml: string, page: number): EShopItems {
     try {
-      const $ = cheerio.load(rawHtml);
+      const $ = cheerio.load(rawHtml)
 
       return {
         current_page: page,
         total_pages: $('.shop-pager .last-page').attr('href') ?? '?page=1',
         items: this.getItems_items($),
-      };
+      }
     } catch (e) {
-      this.printError(e);
+      this.printError(e)
     }
   }
 
   private static getItems_items($: cheerio.CheerioAPI): EItemSummary[] {
-    const items: EItemSummary[] = [];
+    const items: EItemSummary[] = []
     $('.item-list li').each((_, element) => {
-      const itemString = $(element).attr('data-item')!;
-      const item = JSON.parse(itemString) as BItemSummary;
+      const itemString = $(element).attr('data-item')!
+      const item = JSON.parse(itemString) as BItemSummary
       items.push({
         id: String(item.id),
         title: item.name,
@@ -121,9 +121,9 @@ export class HtmlExtractor {
           icon_url: item.shop.thumbnail_url,
           is_verified: item.shop.verified,
         },
-      });
-    });
-    return items;
+      })
+    })
+    return items
   }
 
   static getItemList(
@@ -133,9 +133,9 @@ export class HtmlExtractor {
     page: number,
   ): EItemList {
     try {
-      const $ = cheerio.load(rawHtml);
-      const itemListUrl = `https://${subdomain}.booth.pm/item_lists/${itemlistId}`;
-      const itemListName = $($('.item-list-breadcrumb').contents()[2]).text();
+      const $ = cheerio.load(rawHtml)
+      const itemListUrl = `https://${subdomain}.booth.pm/item_lists/${itemlistId}`
+      const itemListName = $($('.item-list-breadcrumb').contents()[2]).text()
 
       return {
         current_page: page,
@@ -143,9 +143,9 @@ export class HtmlExtractor {
         items: this.getItems_items($),
         url: itemListUrl,
         name: itemListName,
-      };
+      }
     } catch (e) {
-      this.printError(e);
+      this.printError(e)
     }
   }
 }

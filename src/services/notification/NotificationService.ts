@@ -1,13 +1,13 @@
-import { type Notifications } from '@/types';
-import { JsonFetcher } from './fetchers';
-import { HTTPClient } from '..';
-import { JsonNormalizer } from './normalizers';
+import { type Notifications } from '@/types'
+import { HTTPClient } from '../common/HTTPClient'
+import { JsonFetcher } from './fetchers/JsonFetcher'
+import { JsonNormalizer } from './normalizers/JsonNormalizer'
 
 export class NotificationService {
-  private jsonFetcher: JsonFetcher;
+  private jsonFetcher: JsonFetcher
 
   constructor(client: HTTPClient) {
-    this.jsonFetcher = new JsonFetcher(client);
+    this.jsonFetcher = new JsonFetcher(client)
   }
 
   /**
@@ -32,8 +32,8 @@ export class NotificationService {
    * ```
    */
   async list(): Promise<Notifications> {
-    const notifications = await this.jsonFetcher.list();
-    return JsonNormalizer.list(notifications);
+    const notifications = await this.jsonFetcher.list()
+    return JsonNormalizer.list(notifications)
   }
 
   /**
@@ -54,8 +54,8 @@ export class NotificationService {
    * ```
    */
   async getUnreadCount(): Promise<number> {
-    const notifications = await this.jsonFetcher.list();
+    const notifications = await this.jsonFetcher.list()
 
-    return notifications.unread.length;
+    return notifications.unread.length
   }
 }

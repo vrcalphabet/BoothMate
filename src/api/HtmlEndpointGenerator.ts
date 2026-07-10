@@ -1,12 +1,12 @@
-import { AgeRestriction, ItemType, SortOrder } from '@/types';
-import { Validator } from '@/utils';
-import { type NSearchFilter } from '@/types/normalized';
-import { type EndpointUrlSpec } from '@/types/internal';
+import { AgeRestriction, ItemType, SortOrder } from '@/types'
+import { type EndpointUrlSpec } from '@/types/internal'
+import { type NSearchFilter } from '@/types/internal/normalized'
+import { Validator } from '@/utils/Validator'
 
 export class HtmlEndpointGenerator {
-  protected static baseUrl: string = 'https://booth.pm';
-  protected static baseAccountUrl: string = 'https://accounts.booth.pm';
-  protected static baseApiUrl: string = 'https://api.booth.pm/frontend';
+  protected static baseUrl: string = 'https://booth.pm'
+  protected static baseAccountUrl: string = 'https://accounts.booth.pm'
+  protected static baseApiUrl: string = 'https://api.booth.pm/frontend'
 
   private constructor() {}
 
@@ -15,64 +15,64 @@ export class HtmlEndpointGenerator {
   /**********************************************************/
 
   static search(filter: NSearchFilter): EndpointUrlSpec {
-    let type: 'query' | 'event' | null = null;
+    let type: 'query' | 'event' | null = null
 
-    const endpoint = new URL(`${this.baseUrl}/ja/`);
+    const endpoint = new URL(`${this.baseUrl}/ja/`)
     if (filter.category) {
-      endpoint.pathname += `browse/${encodeURIComponent(filter.category)}`;
+      endpoint.pathname += `browse/${encodeURIComponent(filter.category)}`
     } else if (filter.query) {
-      endpoint.pathname += `search/${encodeURIComponent(filter.query)}`;
-      type = 'query';
+      endpoint.pathname += `search/${encodeURIComponent(filter.query)}`
+      type = 'query'
     } else if (filter.event) {
-      endpoint.pathname += `events/${encodeURIComponent(filter.event)}`;
-      type = 'event';
+      endpoint.pathname += `events/${encodeURIComponent(filter.event)}`
+      type = 'event'
     } else {
-      endpoint.pathname += `items`;
+      endpoint.pathname += `items`
     }
 
-    endpoint.searchParams.set('page', Validator.validatePage(filter.page));
+    endpoint.searchParams.set('page', Validator.validatePage(filter.page))
 
     if (filter.sort !== SortOrder.POPULARITY) {
-      endpoint.searchParams.set('sort', filter.sort);
+      endpoint.searchParams.set('sort', filter.sort)
     }
     if (filter.query && type !== 'query') {
-      endpoint.searchParams.set('q', filter.query);
+      endpoint.searchParams.set('q', filter.query)
     }
     if (filter.event && type !== 'event') {
-      endpoint.searchParams.set('event', filter.event);
+      endpoint.searchParams.set('event', filter.event)
     }
     if (filter.item_type !== ItemType.UNSPECIFIED) {
-      endpoint.searchParams.set('type', filter.item_type);
+      endpoint.searchParams.set('type', filter.item_type)
     }
     if (filter.age_restriction !== AgeRestriction.GENERAL) {
-      endpoint.searchParams.set('adult', filter.age_restriction);
+      endpoint.searchParams.set('adult', filter.age_restriction)
     }
     if (!filter.include_unavailable) {
-      endpoint.searchParams.set('in_stock', 'true');
+      endpoint.searchParams.set('in_stock', 'true')
     }
     if (filter.min_price > 0) {
-      endpoint.searchParams.set('min_price', String(filter.min_price));
+      endpoint.searchParams.set('min_price', String(filter.min_price))
     }
     if (filter.max_price && filter.max_price > 0) {
-      endpoint.searchParams.set('max_price', String(filter.max_price));
+      endpoint.searchParams.set('max_price', String(filter.max_price))
     }
 
     for (const excludeQuery of filter.exclude_query) {
-      endpoint.searchParams.append('except_words[]', excludeQuery);
+      endpoint.searchParams.append('except_words[]', excludeQuery)
     }
     for (const tag of filter.tags) {
-      endpoint.searchParams.append('tags[]', tag);
+      endpoint.searchParams.append('tags[]', tag)
     }
 
-    return { url: endpoint.href, requiresSession: false, requiresCsrf: false };
+    return { url: endpoint.href, requiresSession: false, requiresCsrf: false }
   }
 
   static getItem(itemId: number): EndpointUrlSpec | undefined {
     try {
-      const endpoint = `${this.baseUrl}/ja/items/${Validator.validateItemId(itemId)}`;
-      return { url: endpoint, requiresSession: false, requiresCsrf: false };
+      const endpoint = `${this.baseUrl}/ja/items/${Validator.validateItemId(itemId)}`
+      return { url: endpoint, requiresSession: false, requiresCsrf: false }
     } catch {
-      return undefined;
+      return undefined
     }
   }
 
@@ -84,11 +84,11 @@ export class HtmlEndpointGenerator {
     try {
       const endpoint = new URL(
         `https://${Validator.validateSubdomain(subdomain)}.booth.pm/items`,
-      );
-      endpoint.searchParams.set('page', Validator.validatePage(page));
-      return { url: endpoint.href, requiresSession: false, requiresCsrf: false };
+      )
+      endpoint.searchParams.set('page', Validator.validatePage(page))
+      return { url: endpoint.href, requiresSession: false, requiresCsrf: false }
     } catch {
-      return undefined;
+      return undefined
     }
   }
 
@@ -100,11 +100,11 @@ export class HtmlEndpointGenerator {
     try {
       const endpoint = new URL(
         `https://${Validator.validateSubdomain(subdomain)}.booth.pm/item_lists/${Validator.validateItemListId(itemListId)}`,
-      );
-      endpoint.searchParams.set('page', Validator.validatePage(page));
-      return { url: endpoint.href, requiresSession: false, requiresCsrf: false };
+      )
+      endpoint.searchParams.set('page', Validator.validatePage(page))
+      return { url: endpoint.href, requiresSession: false, requiresCsrf: false }
     } catch {
-      return undefined;
+      return undefined
     }
   }
 }

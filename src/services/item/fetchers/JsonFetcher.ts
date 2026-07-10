@@ -1,34 +1,34 @@
-import { HTTPClient } from '@/services';
-import { EndpointGenerator } from '@/api';
-import { type BItem } from '@/types/booth-api';
+import { JsonEndpointGenerator } from '@/api/JsonEndpointGenerator'
+import { HTTPClient } from '@/services/common/HTTPClient'
+import { type BItem } from '@/types/internal/booth-api'
 
 export class JsonFetcher {
-  private client: HTTPClient;
+  private client: HTTPClient
 
   constructor(client: HTTPClient) {
-    this.client = client;
+    this.client = client
   }
 
   async get(itemId: number): Promise<BItem | undefined> {
-    const itemUrl = EndpointGenerator.json.getItem(itemId);
-    if (!itemUrl) return undefined;
+    const itemUrl = JsonEndpointGenerator.getItem(itemId)
+    if (!itemUrl) return undefined
 
     try {
-      return await this.client.get<BItem>(itemUrl);
+      return await this.client.get<BItem>(itemUrl)
     } catch {
-      return undefined;
+      return undefined
     }
   }
 
   async exists(itemId: number): Promise<boolean> {
-    const itemUrl = EndpointGenerator.json.getItem(itemId);
-    if (!itemUrl) return false;
+    const itemUrl = JsonEndpointGenerator.getItem(itemId)
+    if (!itemUrl) return false
 
     try {
-      await this.client.head(itemUrl);
-      return true;
+      await this.client.head(itemUrl)
+      return true
     } catch {
-      return false;
+      return false
     }
   }
 }

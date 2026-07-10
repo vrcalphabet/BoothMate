@@ -1,18 +1,18 @@
-import { HTTPClient } from '@/services';
-import { EndpointGenerator } from '@/api';
-import { type BWishlistCounts } from '@/types/booth-api';
+import { JsonEndpointGenerator } from '@/api/JsonEndpointGenerator'
+import { HTTPClient } from '@/services/common/HTTPClient'
+import { type BWishlistCounts } from '@/types/internal/booth-api'
 
 export class CommonJsonFetcher {
-  private client: HTTPClient;
+  private client: HTTPClient
 
   constructor(client: HTTPClient) {
-    this.client = client;
+    this.client = client
   }
 
   wishlistCountsFromResult(result: {
-    items: { id: number | string }[];
+    items: { id: number | string }[]
   }): Promise<BWishlistCounts> {
-    return this.wishlistCounts(result.items.map((item) => item.id));
+    return this.wishlistCounts(result.items.map((item) => item.id))
   }
 
   async wishlistCounts(ids: (number | string)[]): Promise<BWishlistCounts> {
@@ -20,12 +20,12 @@ export class CommonJsonFetcher {
       return {
         item_ids: [],
         wishlists_counts: {},
-      };
+      }
     }
 
-    const wishlistUrl = EndpointGenerator.json.wishlistCounts(
+    const wishlistUrl = JsonEndpointGenerator.wishlistCounts(
       ids.map((item) => String(item)),
-    );
-    return this.client.get<BWishlistCounts>(wishlistUrl);
+    )
+    return this.client.get<BWishlistCounts>(wishlistUrl)
   }
 }

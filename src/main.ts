@@ -1,11 +1,9 @@
-import {
-  ShopService,
-  UtilsService,
-  NotificationService,
-  WishlistService,
-  ItemService,
-  HTTPClient,
-} from './services';
+import { HTTPClient } from './services/common/HTTPClient'
+import { ItemService } from './services/item/ItemService'
+import { NotificationService } from './services/notification/NotificationService'
+import { ShopService } from './services/shop/ShopService'
+import { UtilsService } from './services/utils/UtilsService'
+import { WishlistService } from './services/wishlist/WishlistService'
 
 /**
  * BoothMateのインスタンス初期化用オプション
@@ -15,33 +13,33 @@ export interface BoothMateOptions {
    * セッション識別用のCookie値( `_plaza_session_nktz7u` の値)。
    * アカウントの識別と認証に使用します（任意）。
    */
-  sessionToken?: string;
+  sessionToken?: string
   /**
    * CSRF保護用のトークン（ `meta[name="csrf-token"]` から取得）。
    * スキリストの操作（スキ！の追加・編集・削除）に必要です（任意）。
    */
-  csrfToken?: string;
+  csrfToken?: string
   /**
    * HTTPリクエストのデバッグモードの有効/無効（省略時はfalse、任意）。
    */
-  debug?: boolean;
+  debug?: boolean
 }
 
 export class BoothMate {
-  private client: HTTPClient;
+  private client: HTTPClient
   /** 商品の検索・取得を行うサービスクラスです。 */
-  readonly item: ItemService;
+  readonly item: ItemService
   /** ショップの情報を取得するサービスクラスです。 */
-  readonly shop: ShopService;
+  readonly shop: ShopService
   /** スキリストの取得・操作を行うサービスクラスです。 */
-  readonly wishlist: WishlistService;
+  readonly wishlist: WishlistService
   /** ユーティリティ関数を提供するサービスクラスです。 */
-  readonly utils: UtilsService;
+  readonly utils: UtilsService
   /**
    * 通知の取得を行うサービスクラスです。
    * @experimental 実験的な機能であり、将来的に変更される可能性があります。
    */
-  readonly notification: NotificationService;
+  readonly notification: NotificationService
 
   /**
    * BoothMateのインスタンスを作成します。
@@ -71,13 +69,13 @@ export class BoothMate {
       sessionToken: options.sessionToken,
       csrfToken: options.csrfToken,
       debug: options.debug ?? false,
-    });
+    })
 
-    this.item = new ItemService(this.client);
-    this.shop = new ShopService(this.client);
-    this.wishlist = new WishlistService(this.client);
-    this.utils = new UtilsService(this.client);
-    this.notification = new NotificationService(this.client);
+    this.item = new ItemService(this.client)
+    this.shop = new ShopService(this.client)
+    this.wishlist = new WishlistService(this.client)
+    this.utils = new UtilsService(this.client)
+    this.notification = new NotificationService(this.client)
   }
 
   /**
@@ -101,7 +99,7 @@ export class BoothMate {
       sessionToken: options.sessionToken,
       csrfToken: options.csrfToken,
       debug: options.debug ?? false,
-    });
+    })
   }
 
   /**
@@ -109,8 +107,8 @@ export class BoothMate {
    * @returns 現在の設定オブジェクト
    */
   getOptions(): BoothMateOptions & { debug: boolean } {
-    return this.client.getOptions();
+    return this.client.getOptions()
   }
 }
 
-export * from './types';
+export * from './types'

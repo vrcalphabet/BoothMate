@@ -1,17 +1,17 @@
-import { type ItemList, type Shop, type ShopItems } from '@/types';
-import { HTTPClient } from '..';
-import { HtmlFetcher } from './fetchers';
-import { HtmlExtractor } from './extractors';
-import { HtmlNormalizer } from './normalizers';
-import { CommonJsonFetcher } from '../common';
+import { type ItemList, type Shop, type ShopItems } from '@/types'
+import { HTTPClient } from '../common/HTTPClient'
+import { CommonJsonFetcher } from '../common/fetchers/CommonJsonFetcher'
+import { HtmlExtractor } from './extractors/HtmlExtractor'
+import { HtmlFetcher } from './fetchers/HtmlFetcher'
+import { HtmlNormalizer } from './normalizers/HtmlNormalizer'
 
 export class ShopService {
-  private htmlFetcher: HtmlFetcher;
-  private commonJsonFetcher: CommonJsonFetcher;
+  private htmlFetcher: HtmlFetcher
+  private commonJsonFetcher: CommonJsonFetcher
 
   constructor(client: HTTPClient) {
-    this.htmlFetcher = new HtmlFetcher(client);
-    this.commonJsonFetcher = new CommonJsonFetcher(client);
+    this.htmlFetcher = new HtmlFetcher(client)
+    this.commonJsonFetcher = new CommonJsonFetcher(client)
   }
 
   /**
@@ -33,13 +33,13 @@ export class ShopService {
    * ```
    */
   async get(subdomain: string): Promise<Shop | undefined> {
-    const shopHtml = await this.htmlFetcher.getItems(subdomain, 1);
-    if (!shopHtml) return undefined;
+    const shopHtml = await this.htmlFetcher.getItems(subdomain, 1)
+    if (!shopHtml) return undefined
 
-    const extractedShop = HtmlExtractor.get(shopHtml, subdomain);
-    const normalizedShop = HtmlNormalizer.get(extractedShop);
+    const extractedShop = HtmlExtractor.get(shopHtml, subdomain)
+    const normalizedShop = HtmlNormalizer.get(extractedShop)
 
-    return normalizedShop;
+    return normalizedShop
   }
 
   /**
@@ -65,19 +65,22 @@ export class ShopService {
    * }
    * ```
    */
-  async getItems(subdomain: string, page: number = 1): Promise<ShopItems | undefined> {
-    const shopItemsHtml = await this.htmlFetcher.getItems(subdomain, page);
-    if (!shopItemsHtml) return undefined;
+  async getItems(
+    subdomain: string,
+    page: number = 1,
+  ): Promise<ShopItems | undefined> {
+    const shopItemsHtml = await this.htmlFetcher.getItems(subdomain, page)
+    if (!shopItemsHtml) return undefined
 
-    const extractedShopItems = HtmlExtractor.getItems(shopItemsHtml, page);
+    const extractedShopItems = HtmlExtractor.getItems(shopItemsHtml, page)
     const wishlistCounts =
-      await this.commonJsonFetcher.wishlistCountsFromResult(extractedShopItems);
+      await this.commonJsonFetcher.wishlistCountsFromResult(extractedShopItems)
     const normalizedShopItems = HtmlNormalizer.getItems(
       extractedShopItems,
       wishlistCounts,
-    );
+    )
 
-    return normalizedShopItems;
+    return normalizedShopItems
   }
 
   /**
@@ -110,22 +113,26 @@ export class ShopService {
     itemListId: string,
     page: number = 1,
   ): Promise<ItemList | undefined> {
-    const itemListHtml = await this.htmlFetcher.getItemList(subdomain, itemListId, page);
-    if (!itemListHtml) return undefined;
+    const itemListHtml = await this.htmlFetcher.getItemList(
+      subdomain,
+      itemListId,
+      page,
+    )
+    if (!itemListHtml) return undefined
 
     const extractedItemList = HtmlExtractor.getItemList(
       itemListHtml,
       subdomain,
       itemListId,
       page,
-    );
+    )
     const wishlistCounts =
-      await this.commonJsonFetcher.wishlistCountsFromResult(extractedItemList);
+      await this.commonJsonFetcher.wishlistCountsFromResult(extractedItemList)
     const normalizedItemList = HtmlNormalizer.getItemList(
       extractedItemList,
       wishlistCounts,
-    );
+    )
 
-    return normalizedItemList;
+    return normalizedItemList
   }
 }

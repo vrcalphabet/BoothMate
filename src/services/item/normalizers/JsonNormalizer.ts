@@ -1,5 +1,4 @@
-import { CommonJsonNormalizer } from '@/services/common';
-import { FileSizeConverter, LinkClassifier } from '@/utils';
+import { CommonJsonNormalizer } from '@/services/common/normalizers/CommonJsonNormalizer'
 import {
   type AudioPreview,
   type Embed,
@@ -9,15 +8,22 @@ import {
   type ItemFileInfo,
   type ItemTrackInfoWithFiles,
   type ItemVariation,
-} from '@/types';
-import { type BItem, type BItemDownloadable, type BItemImages, type BItemVariation } from '@/types/booth-api';
+} from '@/types'
+import {
+  type BItem,
+  type BItemDownloadable,
+  type BItemImages,
+  type BItemVariation,
+} from '@/types/internal/booth-api'
+import { FileSizeConverter } from '@/utils/FileSizeConverter'
+import { LinkClassifier } from '@/utils/LinkClassifier'
 
 export class JsonNormalizer {
   private constructor() {}
 
   static thumbnails(thumbnails: string[]): ImageInfo[] {
     if (thumbnails.length === 0 || thumbnails[0].includes('_placeholder_')) {
-      return [];
+      return []
     }
 
     return thumbnails.map<ImageInfo>((thumbnail) => {
@@ -26,8 +32,8 @@ export class JsonNormalizer {
       return {
         original: `https://booth.pximg.net/${imageId}.png`,
         resized: thumbnail,
-      };
-    });
+      }
+    })
   }
 
   static thumbnailsWithCaption(thumbnails: BItemImages[]): ImageInfoWithCaption[] {
@@ -36,8 +42,8 @@ export class JsonNormalizer {
         original: thumbnail.original,
         resized: thumbnail.resized,
         caption: thumbnail.caption || undefined,
-      };
-    });
+      }
+    })
   }
 
   static get(item: BItem): Item {
@@ -64,30 +70,30 @@ export class JsonNormalizer {
       tags: item.tags.map((tag) => tag.name),
       album: this.get_album(item.tracks),
       variations: this.get_variations(item.variations),
-    };
+    }
   }
 
   private static get_price(
     variations: BItem['variations'],
   ): Pick<Item, 'min_price' | 'has_variations'> {
-    const prices = variations.map((variation) => variation.price);
-    const hasNonZeroPrice = prices.some((price) => price > 0);
+    const prices = variations.map((variation) => variation.price)
+    const hasNonZeroPrice = prices.some((price) => price > 0)
 
-    let minPrice: number;
+    let minPrice: number
     if (hasNonZeroPrice) {
       minPrice = prices
         .filter((price) => price > 0)
         .reduce((min, price) => {
-          return Math.min(min, price);
-        }, Infinity);
+          return Math.min(min, price)
+        }, Infinity)
     } else {
-      minPrice = 0;
+      minPrice = 0
     }
 
     return {
       min_price: minPrice,
       has_variations: [...new Set(prices)].length > 1,
-    };
+    }
   }
 
   private static get_stock(variations: BItem['variations']): number | undefined {
@@ -97,41 +103,43 @@ export class JsonNormalizer {
         : variation.is_empty_stock ? 0
         : undefined,
       )
-      .filter((stock) => stock !== undefined);
+      .filter((stock) => stock !== undefined)
 
-    if (stocks.length === 0) return undefined;
-    return Math.max(...stocks);
+    if (stocks.length === 0) return undefined
+    return Math.max(...stocks)
   }
 
-  private static get_preview(music: BItem['sound'] | null): AudioPreview | undefined {
-    if (!music) return undefined;
+  private static get_preview(
+    music: BItem['sound'] | null,
+  ): AudioPreview | undefined {
+    if (!music) return undefined
 
     return {
       full: music.full_url,
       short: music.short_url,
-    };
+    }
   }
 
   private static get_embeds(embeds: string[]): Embed[] {
-    return embeds.map<Embed>((embed) => LinkClassifier.classifyEmbed(embed));
+    return embeds.map<Embed>((embed) => LinkClassifier.classifyEmbed(embed))
   }
 
   private static get_album(tracks: BItem['tracks']): Item['album'] {
-    if (!tracks) return undefined;
+    if (!tracks) return undefined
 
-    const albumArtist = tracks[0][0].album_artist;
+    const albumArtist = tracks[0][0].album_artist
     const trackInfo = tracks.map((disc) => {
       return disc.map((track) => ({
         artist: track.artist,
         title: track.title,
         track_number: track.track_number,
-      }));
-    });
+      }))
+    })
 
     return {
       artist: albumArtist,
       discs: trackInfo,
-    };
+    }
   }
 
   private static get_variations(variations: BItemVariation[]): ItemVariation[] {
@@ -147,14 +155,14 @@ export class JsonNormalizer {
           : variation.is_empty_stock ? 0
           : undefined,
         downloadable: this.get_downloadable(variation.downloadable ?? undefined),
-      } satisfies ItemVariation;
-    });
+      } satisfies ItemVariation
+    })
   }
 
   private static get_downloadable(downloadable?: BItemDownloadable): ItemFileInfo[] {
-    if (!downloadable) return [];
+    if (!downloadable) return []
 
-    const fileInfos: ItemFileInfo[] = [];
+    const fileInfos: ItemFileInfo[] = []
 
     downloadable.musics.forEach((disc) => {
       const tracks = disc.tracks.map<ItemTrackInfoWithFiles>((track) => {
@@ -167,14 +175,14 @@ export class JsonNormalizer {
             m4a: track.optional_files[1].url,
             mp3: track.optional_files[2].url,
           },
-        };
-      });
+        }
+      })
 
       fileInfos.push({
         is_music: true,
         tracks: tracks,
-      });
-    });
+      })
+    })
 
     downloadable.no_musics.forEach((file) => {
       fileInfos.push({
@@ -183,9 +191,9 @@ export class JsonNormalizer {
         file_extension: file.file_extension,
         file_size: FileSizeConverter.toBytes(file.file_size),
         url: file.url,
-      });
-    });
+      })
+    })
 
-    return fileInfos;
+    return fileInfos
   }
 }

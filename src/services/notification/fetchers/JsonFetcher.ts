@@ -1,16 +1,16 @@
-import { HTTPClient } from '@/services';
-import { EndpointGenerator } from '@/api';
-import { type BNotifications } from '@/types/booth-api';
+import { JsonEndpointGenerator } from '@/api/JsonEndpointGenerator'
+import { HTTPClient } from '@/services/common/HTTPClient'
+import { type BNotifications } from '@/types/internal/booth-api'
 
 export class JsonFetcher {
-  private client: HTTPClient;
+  private client: HTTPClient
 
   constructor(client: HTTPClient) {
-    this.client = client;
+    this.client = client
   }
 
   list(): Promise<BNotifications> {
-    const notificationUrl = EndpointGenerator.json.notificationList();
-    return this.client.get<BNotifications>(notificationUrl);
+    const notificationUrl = JsonEndpointGenerator.notificationList()
+    return this.client.get<BNotifications>(notificationUrl)
   }
 }

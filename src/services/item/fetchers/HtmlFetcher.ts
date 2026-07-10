@@ -1,23 +1,23 @@
-import { HTTPClient } from '@/services';
-import { EndpointGenerator } from '@/api';
-import { type NSearchFilter } from '@/types/normalized';
+import { HtmlEndpointGenerator } from '@/api/HtmlEndpointGenerator'
+import { HTTPClient } from '@/services/common/HTTPClient'
+import { type NSearchFilter } from '@/types/internal/normalized'
 
 export class HtmlFetcher {
-  private client: HTTPClient;
+  private client: HTTPClient
 
   constructor(client: HTTPClient) {
-    this.client = client;
+    this.client = client
   }
 
   search(filter: NSearchFilter): Promise<string> {
-    const searchURL = EndpointGenerator.html.search(filter);
-    return this.client.getHtml(searchURL);
+    const searchURL = HtmlEndpointGenerator.search(filter)
+    return this.client.getHtml(searchURL)
   }
 
   async get(itemId: number): Promise<string | undefined> {
-    const itemURL = EndpointGenerator.html.getItem(itemId);
-    if (!itemURL) return undefined;
+    const itemURL = HtmlEndpointGenerator.getItem(itemId)
+    if (!itemURL) return undefined
 
-    return this.client.getHtml(itemURL);
+    return this.client.getHtml(itemURL)
   }
 }

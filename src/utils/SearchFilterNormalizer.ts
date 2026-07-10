@@ -1,5 +1,6 @@
-import { type SearchFilter, AgeRestriction, ItemType, SortOrder } from '@/types';
-import { type NSearchFilter } from '@/types/normalized';
+import { AgeRestriction, ItemType, SortOrder } from '@/types/enums'
+import { type SearchFilter } from '@/types/interfaces'
+import { type NSearchFilter } from '@/types/internal/normalized'
 
 class SearchFilterNormalizer {
   static normalize(query: string, filter: SearchFilter): NSearchFilter {
@@ -16,11 +17,11 @@ class SearchFilterNormalizer {
       min_price: filter.min_price ?? 0,
       max_price: filter.max_price,
       sort: filter.sort ?? SortOrder.POPULARITY,
-    };
+    }
   }
 
   private static stringify(value?: string | string[]): string | void {
-    return Array.isArray(value) ? value.join(' ') : value;
+    return Array.isArray(value) ? value.join(' ') : value
   }
 
   private static toArray(value?: string | string[]): string[] {
@@ -28,8 +29,8 @@ class SearchFilterNormalizer {
       Array.isArray(value) ? value
       : value ? [value]
       : []
-    );
+    )
   }
 }
 
-export { SearchFilterNormalizer };
+export { SearchFilterNormalizer }

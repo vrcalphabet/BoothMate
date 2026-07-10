@@ -1,15 +1,24 @@
-import { CategoryConverter } from '@/utils';
-import { BoothEvent, type ImageInfo, type ItemSummary, type ShopSummary, SubCategory } from '@/types';
-import { type BWishlistCounts } from '@/types/booth-api';
-import { type EItemSummary, type EShopSummary } from '@/types/extracted';
+import {
+  BoothEvent,
+  type ImageInfo,
+  type ItemSummary,
+  type ShopSummary,
+  SubCategory,
+} from '@/types'
+import { type BWishlistCounts } from '@/types/internal/booth-api'
+import { type EItemSummary, type EShopSummary } from '@/types/internal/extracted'
+import { CategoryConverter } from '@/utils/CategoryConverter'
 
 export class CommonHtmlNormalizer {
   private constructor() {}
 
-  static items(items: EItemSummary[], wishlistCounts: BWishlistCounts): ItemSummary[] {
+  static items(
+    items: EItemSummary[],
+    wishlistCounts: BWishlistCounts,
+  ): ItemSummary[] {
     return items.map<ItemSummary>((item) => {
-      const subcategory = item.subcategory.match(/[^ ]+$/)![0] as SubCategory;
-      const minPrice = Number(item.price.replace(/,/g, '').match(/\d+/)![0]);
+      const subcategory = item.subcategory.match(/[^ ]+$/)![0] as SubCategory
+      const minPrice = Number(item.price.replace(/,/g, '').match(/\d+/)![0])
 
       return {
         id: Number(item.id),
@@ -38,8 +47,8 @@ export class CommonHtmlNormalizer {
         is_discontinued: item.stock === '販売終了',
         preview: item.preview,
         shop: this.shopSummary(item.shop),
-      };
-    });
+      }
+    })
   }
 
   static thumbnails(thumbnails: string[]): ImageInfo[] {
@@ -49,8 +58,8 @@ export class CommonHtmlNormalizer {
       return {
         original: imageId ? `https://booth.pximg.net/${imageId[1]}.png` : thumbnail,
         resized: thumbnail,
-      };
-    });
+      }
+    })
   }
 
   static shopSummary(shop: EShopSummary): ShopSummary {
@@ -60,6 +69,6 @@ export class CommonHtmlNormalizer {
       name: shop.name,
       icon_url: shop.icon_url.replace('/48x48/', '/128x128/'),
       is_verified: shop.is_verified,
-    };
+    }
   }
 }

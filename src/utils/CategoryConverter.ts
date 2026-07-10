@@ -1,7 +1,7 @@
-import { Category, SubCategory } from '@/types';
+import { Category, SubCategory } from '@/types/enums'
 
 export class CategoryConverter {
-  private static categoryMapping: Map<SubCategory, Category>;
+  private static categoryMapping: Map<SubCategory, Category>
 
   private constructor() {}
 
@@ -174,10 +174,10 @@ export class CategoryConverter {
       [SubCategory.PRINT, Category.PAINTING_ART_WORK],
       [SubCategory.BYOBU, Category.PAINTING_ART_WORK],
       [SubCategory.PAINTING_ART_WORK_OTHER, Category.PAINTING_ART_WORK],
-    ]);
+    ])
   }
 
   static fromSubCategory(subcategory: SubCategory): Category | undefined {
-    return this.categoryMapping.get(subcategory);
+    return this.categoryMapping.get(subcategory)
   }
 }

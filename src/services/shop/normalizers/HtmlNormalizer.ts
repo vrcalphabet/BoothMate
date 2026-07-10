@@ -1,8 +1,20 @@
-import { CommonHtmlNormalizer } from '@/services/common';
-import { LinkClassifier } from '@/utils';
-import { type ItemList, type ItemListSummary, type Link, type Shop, type ShopItems } from '@/types';
-import { type BWishlistCounts } from '@/types/booth-api';
-import { type EItemList, type EItemListSummary, type ELink, type EShop, type EShopItems } from '@/types/extracted';
+import { CommonHtmlNormalizer } from '@/services/common/normalizers/CommonHtmlNormalizer'
+import {
+  type ItemList,
+  type ItemListSummary,
+  type Link,
+  type Shop,
+  type ShopItems,
+} from '@/types'
+import { type BWishlistCounts } from '@/types/internal/booth-api'
+import {
+  type EItemList,
+  type EItemListSummary,
+  type ELink,
+  type EShop,
+  type EShopItems,
+} from '@/types/internal/extracted'
+import { LinkClassifier } from '@/utils/LinkClassifier'
 
 export class HtmlNormalizer {
   private constructor() {}
@@ -16,14 +28,14 @@ export class HtmlNormalizer {
       description: shop.description,
       links: this.get_links(shop.links),
       item_lists: this.get_itemLists(shop.item_lists),
-    };
+    }
   }
 
   private static get_links(links: ELink[]): Link[] {
     return links.map<Link>((link) => {
-      const classifiedLink = LinkClassifier.classify(link);
-      return classifiedLink;
-    });
+      const classifiedLink = LinkClassifier.classify(link)
+      return classifiedLink
+    })
   }
 
   private static get_itemLists(itemLists: EItemListSummary[]): ItemListSummary[] {
@@ -31,7 +43,7 @@ export class HtmlNormalizer {
       id: itemList.url.match(/\/item_lists\/(\w+)/)![1],
       name: itemList.name,
       public_url: itemList.url,
-    }));
+    }))
   }
 
   static getItems(shop: EShopItems, wishlistCounts: BWishlistCounts): ShopItems {
@@ -39,10 +51,13 @@ export class HtmlNormalizer {
       current_page: Number(shop.current_page),
       total_pages: Number(shop.total_pages.match(/[?&]page=(\d+)/)![1]),
       items: CommonHtmlNormalizer.items(shop.items, wishlistCounts),
-    };
+    }
   }
 
-  static getItemList(itemList: EItemList, wishlistCounts: BWishlistCounts): ItemList {
+  static getItemList(
+    itemList: EItemList,
+    wishlistCounts: BWishlistCounts,
+  ): ItemList {
     return {
       id: itemList.url.match(/\/item_lists\/(\w+)/)![1],
       name: itemList.name,
@@ -50,6 +65,6 @@ export class HtmlNormalizer {
       current_page: Number(itemList.current_page),
       total_pages: Number(itemList.total_pages.match(/[?&]page=(\d+)/)![1]),
       items: CommonHtmlNormalizer.items(itemList.items, wishlistCounts),
-    };
+    }
   }
 }
