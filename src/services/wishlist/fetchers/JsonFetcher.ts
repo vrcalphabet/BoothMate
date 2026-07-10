@@ -25,7 +25,6 @@ export class JsonFetcher {
     if (!wishlistUrl) return undefined
 
     try {
-      console.log(wishlistUrl)
       return await this.client.get<BWishlist>(wishlistUrl)
     } catch {
       const wishlistLocalUrl = JsonEndpointGenerator.getLocalWishlist(

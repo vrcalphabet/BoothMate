@@ -1,9 +1,8 @@
-const { createDefaultPreset } = require('ts-jest')
+import { createDefaultPreset, type JestConfigWithTsJest } from 'ts-jest'
 
 const tsJestTransformCfg = createDefaultPreset().transform
 
-/** @type {import("jest").Config} */
-module.exports = {
+const config: JestConfigWithTsJest = {
   maxWorkers: 1,
   bail: 1,
   testEnvironment: 'node',
@@ -26,3 +25,4 @@ module.exports = {
   setupFilesAfterEnv: ['./tests/setup.ts', './tests/env-setup.ts'],
   globalSetup: './tests/global-setup.ts',
 }
+export default config

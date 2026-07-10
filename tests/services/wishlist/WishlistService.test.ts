@@ -1,4 +1,4 @@
-import { BoothMate } from '@/BoothMate'
+import { BoothMate } from '../../../src/main'
 import 'dotenv/config'
 
 if (!process.env.SESSION_TOKEN || !process.env.CSRF_TOKEN) {

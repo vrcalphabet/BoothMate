@@ -8,7 +8,7 @@
     "module": "preserve",
     "target": "esnext",
     "moduleResolution": "bundler",
-    "lib": ["ESNext"],
+    "lib": ["esnext"],
     "types": ["node"],
 
     // Style Options

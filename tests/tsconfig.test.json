@@ -2,10 +2,13 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "noEmit": true,
-    "declaration": false,
-    "types": ["jest", "node"],
-    "sourceMap": false,
-    "inlineSourceMap": false
+    "module": "esnext",
+    "moduleResolution": "node",
+    "types": ["node", "jest"],
+
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true
   },
-  "include": ["src", "tests", "jest.config.js", "global.d.ts"]
+  "include": ["src"]
 }

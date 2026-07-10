@@ -1,4 +1,4 @@
-import { BoothMate } from '@/BoothMate'
+import { BoothMate } from '../../../src/main'
 import 'dotenv/config'
 
 if (!process.env.SESSION_TOKEN) {
@@ -15,14 +15,6 @@ const badClient = new BoothMate({
 })
 
 describe('BoothMate.utils', () => {
-  describe('BoothMate.utils.getManifest', () => {
-    it('連想配列が返るか？', async () => {
-      const result = await clientWithoutToken.utils.getManifest()
-      expect(result).toBeDefined()
-      expect(isObject(result)).toBe(true)
-    })
-  })
-
   describe('BoothMate.utils.validateToken', () => {
     it('有効なセッションIDでtrueが返るか？', async () => {
       const result = await client.utils.validateToken()

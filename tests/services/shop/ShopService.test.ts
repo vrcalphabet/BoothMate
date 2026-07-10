@@ -1,4 +1,4 @@
-import { BoothMate } from '@/BoothMate'
+import { BoothMate } from '../../../src/main'
 import 'dotenv/config'
 
 const client = new BoothMate({ debug: true })

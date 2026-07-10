@@ -111,4 +111,5 @@ export class BoothMate {
   }
 }
 
+export * from './errors'
 export * from './types'

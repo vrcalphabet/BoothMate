@@ -1,5 +1,4 @@
-import { BoothMate } from '@/BoothMate'
-import { Category } from '@/types'
+import { BoothMate, Category } from '../../../src/main'
 
 const client = new BoothMate({ debug: true })
 
